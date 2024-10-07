@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target-based build systems with CMake &mdash; Introduction to CMake  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css?v=0c089442" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Probing compilation, linking, and execution" href="../probing/" />
+    <link rel="prev" title="CMake syntax" href="../cmake-syntax/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            Introduction to CMake
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setting up your system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The lesson</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../hello-cmake/">From sources to executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-syntax/">CMake syntax</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Target-based build systems with CMake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visibility-levels">Visibility levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multiple-folders">Multiple folders</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../probing/">Probing compilation, linking, and execution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dependencies/">Finding and using dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips-and-tricks/">Tips and tricks using CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../additional-topics/">Additional Topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Introduction to CMake</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Target-based build systems with CMake</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/intro-cmake/blob/main/content/targets.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="target-based-build-systems-with-cmake">
+<span id="targets"></span><h1>Target-based build systems with CMake<a class="headerlink" href="#target-based-build-systems-with-cmake" title="Link to this heading"></a></h1>
+<div class="admonition-questions questions admonition" id="questions-0">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can we handle complex projects with CMake?</p></li>
+<li><p>What exactly are <strong>targets</strong> in the CMake domain-specific language (DSL)?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn that the <strong>basic elements</strong> in CMake are not variables, but targets.</p></li>
+<li><p>Learn about properties of targets and how to use them.</p></li>
+<li><p>Learn how to use <strong>visibility levels</strong> to express dependencies between targets.</p></li>
+<li><p>Learn how to handle multiple targets in one project.</p></li>
+<li><p>Learn how to work with projects spanning multiple folders.</p></li>
+</ul>
+</div>
+<p>Real-world projects require more than compiling a few source files into executables and/or libraries. In most cases, you will come to projects comprising hundreds of source files sprawling in a complex source tree.</p>
+<p>With the advent of CMake 3.0, also known as <strong>Modern CMake</strong>, there has been a significant shift that the CMake domain-specific language (DSL) is structured, which can help you keep the complexity of the build system in check. Rather than relying on <strong>variables</strong> to convey information in a project, all what you need in modern CMake is <strong>targets</strong> and <strong>properties</strong>.</p>
+<section id="id1">
+<h2>Targets<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>A target is the basic element in the CMake DSL, which can be declared by either <code class="docutils literal notranslate"><span class="pre">add_executable</span></code> or <code class="docutils literal notranslate"><span class="pre">add_library</span></code>. Any target has a collection of <strong>properties</strong>, which define:</p>
+<ul class="simple">
+<li><p><em>how</em> the build artifact should be produced,</p></li>
+<li><p><em>how</em> it should be used by other targets in the project that depend on it.</p></li>
+</ul>
+<figure class="align-center">
+<img alt="../_images/target.svg" src="../_images/target.svg" />
+</figure>
+<p>In CMake, the five most used commands used to handle targets are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target_sources</span></code>, specifying which source files to use when compiling a target.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_compile_options</span></code>, specifying which compiler flags to use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_compile_definitions</span></code>, specifying which compiler definitions to use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_include_directories</span></code>, specifying which directories will contain header (for C/C++) and module (for Fortran) files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code>, specifying which libraries to link into the current target.</p></li>
+</ul>
+<p>There are additional commands in the <code class="docutils literal notranslate"><span class="pre">target_*</span></code> family:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-command-list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^target_&quot;</span>
+
+target_compile_definitions
+target_compile_features
+target_compile_options
+target_include_directories
+target_link_directories
+target_link_libraries
+target_link_options
+target_precompile_headers
+target_sources
+</pre></div>
+</div>
+</section>
+<section id="visibility-levels">
+<h2>Visibility levels<a class="headerlink" href="#visibility-levels" title="Link to this heading"></a></h2>
+<p>Why it is robust to use targets and properties than using variables? Given a target <code class="docutils literal notranslate"><span class="pre">tgtX</span></code>, we can invoke one command in the <code class="docutils literal notranslate"><span class="pre">target_*</span></code> family as follows.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">tgtX</span>
+<span class="w">  </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">tgt1</span>
+<span class="w">  </span><span class="s">INTERFACE</span><span class="w"> </span><span class="s">tgt2</span>
+<span class="w">  </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">tgt3</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/target_inheritance.svg" src="../_images/target_inheritance.svg" />
+<figcaption>
+<p><span class="caption-text">Properties on targets have varied <strong>visibility levels</strong>, which determine how CMake should propagate them between interdependent targets.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition-understanding-visibility-levels typealong toggle-shown dropdown admonition" id="typealong-0">
+<p class="admonition-title">Understanding visibility levels</p>
+<p>Visibility levels <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code>, or <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> are very powerful and herein we will briefly demonstrate their difference.</p>
+<p>A complete source code is available in the <code class="docutils literal notranslate"><span class="pre">content/code/04_visibility-levels/</span></code> folder.</p>
+<p>In this code example, we want to compile a C++ library and an executable:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The library code is in the <code class="docutils literal notranslate"><span class="pre">account</span></code> subfolder. It consists of one source (<code class="docutils literal notranslate"><span class="pre">account.cpp</span></code>) and one header file (<code class="docutils literal notranslate"><span class="pre">account.hpp</span></code>).</p></li>
+<li><p>The header file and the shared library are needed for the <code class="docutils literal notranslate"><span class="pre">bank.cpp</span></code> to produce the <code class="docutils literal notranslate"><span class="pre">bank</span></code> executable.</p></li>
+<li><p>We also want to use the <code class="docutils literal notranslate"><span class="pre">-ffast-math</span></code> compiler flag and propagate it throughout the project.</p></li>
+</ul>
+</div></blockquote>
+<p>Thus code structure is arranged in the following format:</p>
+<ol class="arabic">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">account</span></code> target declares the <code class="docutils literal notranslate"><span class="pre">account.cpp</span></code> source file as <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code> since it is only needed to produce the shared library.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_sources</span><span class="p">(</span><span class="s">account</span>
+<span class="w">  </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="s">account.cpp</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-ffast-math</span></code> is instead <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code> as since it needs to be propagated to all targets consuming <code class="docutils literal notranslate"><span class="pre">account</span></code>.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_compile_options</span><span class="p">(</span><span class="s">account</span>
+<span class="w">  </span><span class="s">PUBLIC</span>
+<span class="w">    </span><span class="s2">&quot;-ffast-math&quot;</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">account</span></code> folder is an include directory with <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code>
+visibility because only targets consuming <code class="docutils literal notranslate"><span class="pre">account</span></code> need to know where
+<code class="docutils literal notranslate"><span class="pre">account.hpp</span></code> is located.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">account</span>
+<span class="w">  </span><span class="s">INTERFACE</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonition-rule-of-thumb-for-visibility-settings callout admonition" id="callout-0">
+<p class="admonition-title">Rule of thumb for visibility settings</p>
+<p>When working out which visibility settings to use for the properties of your
+targets you can refer to the following table:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Who needs?</p></th>
+<th class="head" colspan="2"><p>Others</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Target</p></th>
+<th class="head"><p><strong>YES</strong></p></th>
+<th class="head"><p><strong>NO</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p><strong>YES</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>NO</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code></p></td>
+<td><p>N/A</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<p>An additional code example to demonstrate the difference of the visibility levels <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code>, or <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> is available in the <a class="reference external" href="https://coderefinery.github.io/cmake-workshop/targets/#visibility-levels">CodeRefinery CMake Workshop</a> lesson materials.</p>
+</section>
+<section id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<p>CMake lets you set properties at many different levels of visibility across the project:</p>
+<ul class="simple">
+<li><p><strong>Global scope</strong>. These are equivalent to variables set in the root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>. Their use is, however, more powerful as they can be set from <em>any</em> leaf <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p><strong>Directory scope</strong>. These are equivalent to variables set in a given leaf <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p><strong>Target</strong>. These are the properties set on targets that we discussed above.</p></li>
+<li><p><strong>Test</strong>.</p></li>
+<li><p><strong>Source files</strong>. For example, compiler flags.</p></li>
+<li><p><strong>Cache entries</strong>.</p></li>
+<li><p><strong>Installed files</strong>.</p></li>
+</ul>
+<p>For a complete list of properties known to CMake:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-properties<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</pre></div>
+</div>
+<p>You can get the current value of any property with <code class="docutils literal notranslate"><span class="pre">get_property</span></code> and set the value of any property with <code class="docutils literal notranslate"><span class="pre">set_property</span></code>.</p>
+</section>
+<section id="multiple-folders">
+<h2>Multiple folders<a class="headerlink" href="#multiple-folders" title="Link to this heading"></a></h2>
+<p>In the code example about the visibility levels, we have two <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files, one in the <code class="docutils literal notranslate"><span class="pre">account</span></code> subfolder and one in the main folder. This enables the code maintenance being easier if we split the CMake configuration into multiple <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> with the help of <code class="docutils literal notranslate"><span class="pre">add_subdirectory</span></code>. Our goal is to have multiple <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files as close as possible to the source files.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>project/
+├── CMakeLists.txt           &lt;--- Root
+├── external
+│   ├── CMakeLists.txt       &lt;--- Leaf at level 1
+└── src
+    ├── CMakeLists.txt       &lt;--- Leaf at level 1
+    ├── evolution
+    │   ├── CMakeLists.txt   &lt;--- Leaf at level 2
+    ├── initial
+    │   ├── CMakeLists.txt   &lt;--- Leaf at level 2
+    ├── io
+    │   ├── CMakeLists.txt   &lt;--- Leaf at level 2
+    └── parser
+        └── CMakeLists.txt   &lt;--- Leaf at level 2
+</pre></div>
+</div>
+<p>Each folder in a multi-folder project will contain a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>: a source tree with one <strong>root</strong> and many <strong>leaves</strong>.</p>
+<ul class="simple">
+<li><p>The root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> will contain the invocation of the <code class="docutils literal notranslate"><span class="pre">project</span></code> command: variables and targets declared in the root have effectively global scope.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">PROJECT_SOURCE_DIR</span></code> will point to the folder containing the root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p>In order to move between the root and a leaf or between leaves, you will use the <code class="docutils literal notranslate"><span class="pre">add_subdirectory</span></code> command.</p></li>
+</ul>
+<p>Typically, you only need to pass the first argument: the folder within the build tree will be automatically computed by CMake. We can declare targets at any level, not necessarily the root: a target is visible at the level at which it is declared and all higher levels.</p>
+<div class="admonition-exercise-05-cellular-automata exercise important admonition" id="exercise-0">
+<p class="admonition-title">Exercise 05: Cellular automata</p>
+<p>Let’s work with a project spanning multiple folders. We will implement a relatively simple code to compute and print to screen elementary <a class="reference external" href="https://en.wikipedia.org/wiki/Cellular_automaton#Elementary_cellular_automata">cellular automata</a>. We separate the sources into <code class="docutils literal notranslate"><span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">external</span></code> to simulate a nested project which reuses an external project.</p>
+<p>Your goal is to:</p>
+<ul>
+<li><ol class="arabic simple">
+<li><p>Build the main executable at <code class="docutils literal notranslate"><span class="pre">content/code/05_automata/cxx/</span></code> for C++ and <code class="docutils literal notranslate"><span class="pre">content/code/05_automata/fortran/</span></code> for Fortran.</p></li>
+</ol>
+</li>
+<li><ol class="arabic simple" start="2">
+<li><p>Where are the obtained executables located in the build tree? Remember that CMake generates a build tree mirroring the source tree.</p></li>
+</ol>
+</li>
+<li><p>3. The executable will accept 3 arguments: the length, number of steps, and
+automaton rule. You can run it with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>automata<span class="w"> </span><span class="m">40</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">30</span>
+</pre></div>
+</div>
+<p>The output will be:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>length: 40
+number of steps: 5
+rule: 30
+                    *
+                   ***
+                  **  *
+                 ** ****
+                **  *   *
+               ** **** ***
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition-the-internal-dependency-tree typealong toggle-shown dropdown admonition" id="typealong-1">
+<p class="admonition-title">The internal dependency tree</p>
+<p>You can visualize the dependencies between targets in the project with Graphviz (make sure that you have installed the Graphviz package):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+$<span class="w"> </span>cmake<span class="w"> </span>--graphviz<span class="o">=</span>project.dot<span class="w"> </span>..
+$<span class="w"> </span>dot<span class="w"> </span>-T<span class="w"> </span>svg<span class="w"> </span>project.dot<span class="w"> </span>-o<span class="w"> </span>project.svg
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<img alt="../_images/graphviz-multiple-folder-project.svg" src="../_images/graphviz-multiple-folder-project.svg" />
+<figcaption>
+<p><span class="caption-text">The dependencies between targets in the cellular automata project.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>Using <strong>targets</strong>, you can achieve granular control over how artifacts are built and how their dependencies are handled.</p></li>
+<li><p>Compiler flags, definitions, source files, include folders, link libraries, and linker options are <strong>properties</strong> of a target.</p></li>
+<li><p>Avoid using variables to express dependencies between targets: use visibility levels <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code>, <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code> and let CMake figure out the details.</p></li>
+<li><p>To keep the complexity of the build system at a minimum, each folder in a multi-folder project should have its own CMake script.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cmake-syntax/" class="btn btn-neutral float-left" title="CMake syntax" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../probing/" class="btn btn-neutral float-right" title="Probing compilation, linking, and execution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, EuroCC National Competence Centre Sweden.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

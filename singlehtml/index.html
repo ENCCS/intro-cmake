@@ -1,0 +1,1629 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction to CMake documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/clipboard.min.js"></script>
+      <script src="_static/copybutton.js"></script>
+      <script src="_static/minipres.js"></script>
+      <script src="_static/tabs.js"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Introduction to CMake
+              <img src="_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="#document-setup">Setting up your system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The lesson</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="#document-hello-cmake">From sources to executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#document-cmake-syntax">CMake syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#document-targets">Target-based build systems with CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#document-probing">Probing compilation, linking, and execution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#document-dependencies">Finding and using dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#document-tips-and-tricks">Tips and tricks using CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#document-additional-topics">Additional Topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="#document-quick-reference">Quick Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Introduction to CMake</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction to CMake  documentation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/intro-cmake/blob/main/content/index" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction-to-cmake">
+<h1>Introduction to CMake<a class="headerlink" href="#introduction-to-cmake" title="Link to this heading"></a></h1>
+<p>CMake is a language-agnostic, cross-platform build tool and is nowadays the <em>de facto</em> standard, with large projects using it to reliably build, test, and deploy their codebases.</p>
+<p><strong>CMake is not a build system itself, but it generates another system’s build files.</strong></p>
+<p>In this workshop, you will learn</p>
+<ul class="simple">
+<li><p>Write a CMake build system for C/C++ and Fortran projects producing libraries and/or executables.</p></li>
+<li><p>Ensure your build system will work on different platforms.</p></li>
+<li><p>Detect and use external dependencies in your project.</p></li>
+<li><p>(optional) Run tests for your code with <cite>CTest</cite>.</p></li>
+<li><p>(optional) Safely and effectively build mixed-language projects (Python+C/C++, Python+Fortran, Fortran+C/C++)</p></li>
+</ul>
+<div class="admonition-prerequisites prerequisites admonition" id="prerequisites-0">
+<p class="admonition-title">Prerequisites</p>
+<p>Before attending this workshop, please make sure that you have access to a computer with a compiler for your favorite programming language and a recent version of CMake.</p>
+<p>If you have access to a supercomputer (e.g. a <a class="reference external" href="https://www.naiss.se/">NAISS system</a>) with a compute allocation you can use that during the workshop. Any practical questions on how to use a particular HPC resource should be directed to the appropriate support desk.</p>
+<p>You can also use your own computer for this workshop, provided that it has the necessary tools installed.</p>
+<ul class="simple">
+<li><p>If you do not already have these installed, we recommend that you set up an isolated software environment using <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p></li>
+<li><p>For Windows computers we recommend to use the <strong>Windows Subsystem for Linux (WSL)</strong>. Detailed instructions can be found on the <a class="reference internal" href="#document-setup"><span class="doc">Setting up your system</span></a> page.</p></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<span id="document-setup"></span><section id="setting-up-your-system">
+<h2>Setting up your system<a class="headerlink" href="#setting-up-your-system" title="Link to this heading"></a></h2>
+<p>In order to follow this workshop, you will need access to compilers, Python and CMake. You can use an HPC cluster if you have access to one, but the instructions here cover how to install the prerequisites on your own computer.</p>
+<p>These instructions are based on installing compilers and CMake via the <a class="reference external" href="https://docs.conda.io/en/latest/">Conda package and environment manager</a>, as it provides a convenient way to install binary packages in an isolated software environment.</p>
+<section id="for-windows-users">
+<h3>For Windows users<a class="headerlink" href="#for-windows-users" title="Link to this heading"></a></h3>
+<p>We strongly recommend to use (and install if necessary) the <strong>Windows Subsystem for Linux (WSL)</strong> as it is a powerful tool which will likely be useful also after the workshop. Inside WSL you will need Python 3 and the conda environment manager.  A useful guide to do this is found at <a class="reference external" href="https://github.com/kapsakcj/win10-linux-conda-how-to">HERE</a>. The installation of the required dependencies in a <strong>WSL</strong> terminal is documented below.</p>
+</section>
+<section id="for-macos-and-linux-users">
+<h3>For MacOS and Linux users<a class="headerlink" href="#for-macos-and-linux-users" title="Link to this heading"></a></h3>
+<p>MacOS and Linux users can simply open a terminal and install
+<a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>:</p>
+<ul class="simple">
+<li><p>For MacOS see <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html#macosx-installers">HERE</a>.</p></li>
+<li><p>For Linux see <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html#linux-installers">HERE</a>.</p></li>
+</ul>
+</section>
+<section id="creating-an-environment-and-installing-packages">
+<h3>Creating an environment and installing packages<a class="headerlink" href="#creating-an-environment-and-installing-packages" title="Link to this heading"></a></h3>
+<p>Once you have <code class="docutils literal notranslate"><span class="pre">conda</span></code> installed (and <code class="docutils literal notranslate"><span class="pre">WSL</span></code> if you’re using Windows OS) you can use the <a class="reference download internal" download="" href="_downloads/1e955aa7952605b36c4491740042f7a7/environment.yml"><code class="xref download docutils literal notranslate"><span class="pre">environment.yml</span></code></a> file to install dependencies.</p>
+<p>First save it to your hard drive by clicking the link, and then in a terminal navigate to where you saved the file and type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">environment</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>You then need to activate the new environment by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">intro</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">cmake</span>
+</pre></div>
+</div>
+<p>Now you should have CMake, compilers, Python and a few other packages installed!</p>
+</section>
+<section id="the-cmake-modules-on-the-dardel-cluster">
+<h3>The CMake modules on the Dardel cluster<a class="headerlink" href="#the-cmake-modules-on-the-dardel-cluster" title="Link to this heading"></a></h3>
+<p>If you can assess to the Dardel cluster, you can follow the instructions below to load the CMake module from before running hand-on code examples.</p>
+<ul>
+<li><p><a class="reference external" href="https://www.pdc.kth.se/support/documents/login/ssh_login.html">Login to the Dardel cluster</a>.</p></li>
+<li><p>In your home directory, you can create a folder to keep all your data (replace <cite>XXXXX</cite> with a special string for you).</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>cmake_XXXXX
+<span class="nb">cd</span><span class="w"> </span>cmake_XXXXX/
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Loading the CMake module using the commands below.</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ml<span class="w"> </span>PDC/23.12
+ml<span class="w"> </span>cmake/3.27.7
+cmake<span class="w"> </span>--version
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Cloning the github repository using Git, you can access to the code examples in the <cite>content/code</cite> subdirectory.</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ENCCS/intro-cmake.git
+<span class="nb">cd</span><span class="w"> </span>intro-cmake/content/code/
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Following the steps in hand-on exercises to run the code examples.</p></li>
+</ul>
+</section>
+</section>
+</div>
+<div class="toctree-wrapper compound">
+<span id="document-hello-cmake"></span><section id="from-sources-to-executables">
+<span id="hello-cmake"></span><h2>From sources to executables<a class="headerlink" href="#from-sources-to-executables" title="Link to this heading"></a></h2>
+<div class="admonition-questions questions admonition" id="questions-0">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How do we use CMake to compile source files to executables?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn what tools are available in the CMake suite.</p></li>
+<li><p>Learn how to write a simple <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p>Learn the difference between <strong>build systems</strong>, <strong>build tools</strong>, and <strong>build system generator</strong>.</p></li>
+<li><p>Learn to distinguish between <em>configuration</em>, <em>generation</em>, and <em>build</em> time.</p></li>
+</ul>
+</div>
+<section id="what-is-cmake-and-why-should-you-care">
+<h3>What is CMake and why should you care?<a class="headerlink" href="#what-is-cmake-and-why-should-you-care" title="Link to this heading"></a></h3>
+<p>Software is everywhere and so are build systems. Whenever you run a piece of software, anything from calendar apps to computationally-intensive programs, there was a build system involved in transforming the plain-text source code into binary files that could run on the device you are using.</p>
+<p>CMake is a <strong>build-system generator</strong>: it provides a family of tools and a <em>domain-specific language</em> (DSL) to <strong>describe</strong> what the build system should achieve when the appropriate build tools are invoked. The DSL is platform- <em>and</em> compiler-agnostic: you can reuse the same CMake scripts to obtain <strong>native</strong> build systems on any platform.</p>
+<figure class="align-center" id="id2">
+<img alt="_images/build-systems.svg" src="_images/build-systems.svg" />
+<figcaption>
+<p><span class="caption-text">On GNU/Linux, the native build system will be a collection of <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>-s. The <code class="docutils literal notranslate"><span class="pre">make</span></code> build tool uses these <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>-s to transform sources to executables and libraries.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<div class="legend">
+<p>CMake abstracts the process of generating the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>-s away into a generic DSL.</p>
+</div>
+</figcaption>
+</figure>
+<p>A CMake-based build system:</p>
+<ul class="simple">
+<li><p>can bring your software closer to being platform- <em>and</em> compiler-agnostic.</p></li>
+<li><p>has good support within many integrated development environments (IDEs).</p></li>
+<li><p>automatically tracks and propagates internal dependencies in your project.</p></li>
+<li><p>is built on top of well-maintained functionality for automated dependency detection.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Hello, CMake!<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="admonition-compiling-hello-world-with-cmake typealong toggle-shown dropdown admonition" id="typealong-0">
+<p class="admonition-title">Compiling “Hello, world” with CMake</p>
+<p>We will now proceed to compile a single source file to an executable. Choose your favorite language and start typing along!</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Fortran</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p>You can find the file with the complete source code in the <code class="docutils literal notranslate"><span class="pre">content/code/00_hello-world/cxx</span></code> folder.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdlib&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello world from C&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p>You can find the file with the complete source code in the <code class="docutils literal notranslate"><span class="pre">content/code/00_hello-world/fortran</span></code> folder.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">pure function </span><span class="n">say_hello</span><span class="p">()</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">message</span>
+
+<span class="w">  </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Hello world from Fortran&#39;</span>
+
+<span class="k">end function</span>
+
+<span class="k">program </span><span class="n">hello_world</span>
+
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">say_hello</span>
+
+<span class="w">  </span><span class="k">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">say_hello</span><span class="p">()</span>
+
+<span class="k">end program</span>
+</pre></div>
+</div>
+<p>A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div></div>
+<ol class="arabic">
+<li><p>The folder contains only the source code. We need to add a file called <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to it. CMake reads the contents of these special files when generating the build system.</p></li>
+<li><p>The first thing we will do is declare the requirement on minimum version of CMake:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.18</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Next, we declare our project and its programming language:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">project</span><span class="p">(</span><span class="s">Hello</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>We create an <em>executable target</em>. CMake will generate rules in the build system to compile and link our source file into an executable:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_executable</span><span class="p">(</span><span class="s">hello</span><span class="w"> </span><span class="s">hello.cpp</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>We are ready to call CMake and get our build system:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S.<span class="w"> </span>-Bbuild
+</pre></div>
+</div>
+</li>
+<li><p>And finally build our executable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--build<span class="w"> </span>build
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</section>
+<section id="important-issues-for-cmakelists-txt-file">
+<h3>Important issues for <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file<a class="headerlink" href="#important-issues-for-cmakelists-txt-file" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Any CMake build system will invoke the following commands in its <strong>root</strong> <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>:</p>
+<div class="admonition-cmake-minimum-required signature toggle-shown dropdown admonition" id="signature-0">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">cmake_minimum_required</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">&lt;min&gt;[...&lt;max&gt;]</span><span class="w"> </span><span class="s">[FATAL_ERROR]</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-parameters parameters dropdown admonition" id="parameters-0">
+<p class="admonition-title">Parameters</p>
+<p><code class="docutils literal notranslate"><span class="pre">VERSION</span></code>: Minimum and, optionally, maximum version of CMake to use.</p>
+<p><code class="docutils literal notranslate"><span class="pre">FATAL_ERROR</span></code>: Raise a fatal error if the version constraint is not satisfied. This option is ignored by CMake &gt;=2.6</p>
+</div>
+<div class="admonition-project signature toggle-shown dropdown admonition" id="signature-1">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">project</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">project</span><span class="p">(</span><span class="s">&lt;PROJECT-NAME&gt;</span>
+<span class="w">        </span><span class="s">[VERSION</span><span class="w"> </span><span class="s">&lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;tweak&gt;]]]]</span>
+<span class="w">        </span><span class="s">[DESCRIPTION</span><span class="w"> </span><span class="s">&lt;project-description-string&gt;]</span>
+<span class="w">        </span><span class="s">[HOMEPAGE_URL</span><span class="w"> </span><span class="s">&lt;url-string&gt;]</span>
+<span class="w">        </span><span class="s">[LANGUAGES</span><span class="w"> </span><span class="s">&lt;language-name&gt;...]</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-parameters parameters dropdown admonition" id="parameters-1">
+<p class="admonition-title">Parameters</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;PROJECT-NAME&gt;</span></code>: The name of the project.</p>
+<p><code class="docutils literal notranslate"><span class="pre">LANGUAGES</span></code>: Languages in the project.</p>
+</div>
+</li>
+<li><p>The case of CMake commands does not matter: the DSL is case-insensitive. However, the plain-text files that CMake parses <strong>must be called</strong> <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> and the case matters! The variable names are also case sensitive!</p></li>
+<li><p>The command to add executables to the build system is <code class="docutils literal notranslate"><span class="pre">add_executable</span></code>:</p>
+<div class="admonition-add-executable signature toggle-shown dropdown admonition" id="signature-2">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">add_executable</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_executable</span><span class="p">(</span><span class="s">&lt;name&gt;</span><span class="w"> </span><span class="s">[WIN32]</span><span class="w"> </span><span class="s">[MACOSX_BUNDLE]</span>
+<span class="w">               </span><span class="s">[EXCLUDE_FROM_ALL]</span>
+<span class="w">               </span><span class="s">[source1]</span><span class="w"> </span><span class="s">[source2</span><span class="w"> </span><span class="s">...]</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p>Using CMake you can abstract the generation of the build system and also the invocation of the build tools.</p></li>
+</ol>
+<div class="admonition-put-your-cmakelists-txt-under-version-control callout admonition" id="callout-0">
+<p class="admonition-title">Put your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> under version control</p>
+<p>All CMake-related files will evolve together with your codebase. It’s a good idea to put them under <a class="reference external" href="https://coderefinery.github.io/git-intro/">version control</a>. On the contrary, any of the <em>generated</em> native build-system files, <em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>-s, should not be version-controlled.</p>
+</div>
+<div class="admonition-the-command-line-interface-to-cmake typealong toggle-shown dropdown admonition" id="typealong-1">
+<p class="admonition-title">The command-line interface to CMake</p>
+<p>Let us get acquainted with the CMake and especially its command-line interface.</p>
+<p>We can get help at any time with the command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help
+</pre></div>
+</div>
+<p>This will output quite a number of options to your screen. We can analyze the last few lines first:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Generators
+
+The following generators are available on this platform (* marks default):
+* Unix Makefiles                  = Generates standard UNIX makefiles.
+  Green Hills MULTI               = Generates Green Hills MULTI files.
+  Ninja                           = Generates build.ninja files.
+  Ninja Multi-Config              = Generates build-&lt;Config&gt;.ninja files.
+  Watcom WMake                    = Generates Watcom WMake makefiles.
+  CodeBlocks - Ninja              = Generates CodeBlocks project files.
+  CodeBlocks - Unix Makefiles     = Generates CodeBlocks project files.
+  CodeLite - Ninja                = Generates CodeLite project files.
+  CodeLite - Unix Makefiles       = Generates CodeLite project files.
+  Sublime Text 2 - Ninja          = Generates Sublime Text 2 project files.
+  Sublime Text 2 - Unix Makefiles = Generates Sublime Text 2 project files.
+  Kate - Ninja                    = Generates Kate project files.
+  Kate - Unix Makefiles           = Generates Kate project files.
+  Eclipse CDT4 - Ninja            = Generates Eclipse CDT 4.0 project files.
+  Eclipse CDT4 - Unix Makefiles   = Generates Eclipse CDT 4.0 project files.
+</pre></div>
+</div>
+<p>In CMake terminology, the native build scripts and build tools are called <strong>generators</strong>. On any particular platform, the list will show which native build tools can be used through CMake. They can either be “plain”, such as <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>-s or Ninja, or IDE-like projects.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-S</span></code> switch specifies which source directory CMake should scan: this is the folder containing the <em>root</em> <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>, <em>i.e.</em>, the one containing the <a href="#id4"><span class="problematic" id="id5">|project|</span></a> command. By default, CMake will allow <em>in-source</em> builds, <em>i.e.</em> storing build artifacts alongside source files. This is <strong>not</strong> good practice: you should always keep build artifacts from sources separate. Fortunately, the <code class="docutils literal notranslate"><span class="pre">-B</span></code> switch helps with that, as it is used to give where to store build artifacts, including the generated build system. This is the minimal invocation of <code class="docutils literal notranslate"><span class="pre">cmake</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S.<span class="w"> </span>-Bbuild
+</pre></div>
+</div>
+<p>To switch to another generator, we will use the <code class="docutils literal notranslate"><span class="pre">-G</span></code> switch (make sure that the Ninja is correctly built before running the command below):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S.<span class="w"> </span>-Bbuild<span class="w"> </span>-GNinja
+</pre></div>
+</div>
+<p>Options to be used at build-system generation are passed with the <code class="docutils literal notranslate"><span class="pre">-D</span></code> switch. For example, to change compilers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S.<span class="w"> </span>-Bbuild<span class="w"> </span>-GNinja<span class="w"> </span>-DCMAKE_CXX_COMPILER<span class="o">=</span>clang++
+</pre></div>
+</div>
+<p>Finally, you can access to the full CMake manual with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-full
+</pre></div>
+</div>
+<p>You can also inquire about a specific module, command or variable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-variable<span class="w"> </span>CMAKE_GENERATOR
+</pre></div>
+</div>
+</div>
+</section>
+<section id="a-complete-toolchain">
+<h3>A complete toolchain<a class="headerlink" href="#a-complete-toolchain" title="Link to this heading"></a></h3>
+<p>The family of tools provided with CMake offers a complete toolchain to manage the development cycle: from sources to build artifacts, testing, and deployment. We refer to these stages as <em>CMake times</em> and each tool is appropriate at a specific time. In this workshop, we will discuss:</p>
+<ul class="simple">
+<li><p><strong>CMake time</strong> or <strong>configure time</strong>. This is the stage when <code class="docutils literal notranslate"><span class="pre">cmake</span></code> is invoked to parse the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> in your project, configure and generate the build system.</p></li>
+<li><p><strong>Build time</strong>. This is handled by the native build tools, but, as we have seen, these can be effectively wrapped by <code class="docutils literal notranslate"><span class="pre">cmake</span></code> itself.</p></li>
+<li><p><strong>CTest time</strong> or <strong>test time</strong>. At this stage, you will test your build artifacts.</p></li>
+</ul>
+<figure class="align-center" id="id3">
+<img alt="_images/cmake-times.jpg" src="_images/cmake-times.jpg" />
+<figcaption>
+<p><span class="caption-text">You can manage all these stages of a software project’s lifetime with tools provided by CMake. This figure shows all these stages (<em>times</em>) and which tool is appropriate for each. This figure is reproduced from <a class="reference external" href="https://github.com/dev-cafe/cmake-cookbook">CMake Cookbook</a> and is licensed under the terms of the <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/legalcode">CC-BY-SA</a>.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="producing-libraries">
+<h3>Producing libraries<a class="headerlink" href="#producing-libraries" title="Link to this heading"></a></h3>
+<p>CMake can of course be used to produce libraries as well as executables. The relevant command is <code class="docutils literal notranslate"><span class="pre">add_library</span></code>:</p>
+<div class="admonition-add-library signature toggle-shown dropdown admonition" id="signature-3">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">add_library</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_library</span><span class="p">(</span><span class="s">&lt;name&gt;</span><span class="w"> </span><span class="s">[STATIC</span><span class="w"> </span><span class="s">|</span><span class="w"> </span><span class="s">SHARED</span><span class="w"> </span><span class="s">|</span><span class="w"> </span><span class="s">MODULE]</span>
+<span class="w">            </span><span class="s">[EXCLUDE_FROM_ALL]</span>
+<span class="w">            </span><span class="s">[&lt;source&gt;...]</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>You can link libraries into executables with <code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code>:</p>
+<div class="admonition-target-link-libraries signature toggle-shown dropdown admonition" id="signature-4">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">&lt;target&gt;</span>
+<span class="w">                      </span><span class="s">&lt;PRIVATE|PUBLIC|INTERFACE&gt;</span><span class="w"> </span><span class="s">&lt;item&gt;...</span>
+<span class="w">                     </span><span class="s">[&lt;PRIVATE|PUBLIC|INTERFACE&gt;</span><span class="w"> </span><span class="s">&lt;item&gt;...]...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-executables-and-libraries-are-targets callout admonition" id="callout-1">
+<p class="admonition-title">Executables and libraries are targets</p>
+<p>We will encounter the term <strong>target</strong> repeatedly. In CMake, a target is any object given as first argument to <code class="docutils literal notranslate"><span class="pre">add_executable</span></code> or <code class="docutils literal notranslate"><span class="pre">add_library</span></code>. Targets are the basic atom in CMake. Whenever you will need to organize complex projects, think in terms of its targets and their mutual dependencies.</p>
+<p>The whole family of CMake commands <code class="docutils literal notranslate"><span class="pre">target_*</span></code> can be used to express chains of dependencies and is much more effective than keeping track of state with variables. We will clarify these concepts in <a class="reference internal" href="index.html#targets"><span class="std std-ref">Target-based build systems with CMake</span></a>.</p>
+</div>
+<div class="admonition-exercise-1-producing-libraries exercise important admonition" id="exercise-0">
+<p class="admonition-title">Exercise 1: Producing libraries</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Fortran</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><p>You can find a scaffold project in the <code class="docutils literal notranslate"><span class="pre">content/code/01_producing-libraries/cxx</span></code> folder.</p>
+<ol class="arabic simple">
+<li><p>Write a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to compile the source files <code class="docutils literal notranslate"><span class="pre">Message.hpp</span></code> and  <code class="docutils literal notranslate"><span class="pre">Message.cpp</span></code> into a library. <strong>DO NOT</strong> specify the type of library, shared or static, explicitly.</p></li>
+<li><p>Add an executable from the <code class="docutils literal notranslate"><span class="pre">hello-world.cpp</span></code> source file.</p></li>
+<li><p>Link the library into the executable.</p></li>
+</ol>
+<p>A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><p>You can find a scaffold project in the <code class="docutils literal notranslate"><span class="pre">content/code/01_producing-libraries/fortran</span></code> folder.</p>
+<ol class="arabic simple">
+<li><p>Write a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to compile the source files <code class="docutils literal notranslate"><span class="pre">message.f90</span></code> into a library. <strong>DO NOT</strong> specify the type of library shared or static, explicitly.</p></li>
+<li><p>Add an executable from the <code class="docutils literal notranslate"><span class="pre">hello-world.f90</span></code> source file.</p></li>
+<li><p>Link the library into the executable.</p></li>
+</ol>
+<p>A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div></div>
+<p>What kind of library did you get? Static or shared?</p>
+</div>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>CMake is a <strong>build system generator</strong>, not a build system.</p></li>
+<li><p>You write <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to describe how the build tools will create artifacts from sources.</p></li>
+<li><p>You can use the CMake suite of tools to manage the whole lifetime: from source files to tests to deployment.</p></li>
+<li><p>The structure of the project is mirrored in the build folder.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<span id="document-cmake-syntax"></span><section id="cmake-syntax">
+<span id="id1"></span><h2>CMake syntax<a class="headerlink" href="#cmake-syntax" title="Link to this heading"></a></h2>
+<div class="admonition-questions questions admonition" id="questions-0">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can we achieve more control over the build system generated by CMake?</p></li>
+<li><p>Is it possible to let the user decide what to generate?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn how to define variables with <code class="docutils literal notranslate"><span class="pre">set</span></code> and use them with the <code class="docutils literal notranslate"><span class="pre">${}</span></code> operator for <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-language.7.html#variable-references">variable references</a>.</p></li>
+<li><p>Learn the syntax for conditionals in CMake: <code class="docutils literal notranslate"><span class="pre">if</span></code> - <code class="docutils literal notranslate"><span class="pre">elseif</span></code> - <code class="docutils literal notranslate"><span class="pre">else</span></code> - <code class="docutils literal notranslate"><span class="pre">endif</span></code>.</p></li>
+<li><p>Learn the syntax for loops in CMake: <code class="docutils literal notranslate"><span class="pre">foreach</span></code>.</p></li>
+<li><p>Learn how CMake structures build artifacts.</p></li>
+<li><p>Learn how to print helpful messages.</p></li>
+<li><p>Learn how to handle user-facing options: <code class="docutils literal notranslate"><span class="pre">option</span></code> and the role of CMake cache.</p></li>
+</ul>
+</div>
+<p>CMake offers a <strong>domain-specific language</strong> (DSL) to describe how to generate a build system native to the specific platform you might be running on. In this episode, we will get acquainted with its syntax.</p>
+<section id="the-cmake-dsl">
+<h3>The CMake DSL<a class="headerlink" href="#the-cmake-dsl" title="Link to this heading"></a></h3>
+<p>Remember that the DSL is <strong>case-insensitive</strong>. We will now have a look at its main elements.</p>
+<section id="variables">
+<h4>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h4>
+<p>These are either CMake- or user-defined variables. You can obtain the list of CMake-defined variables with the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-variable-list
+</pre></div>
+</div>
+<p>You can create a new variable with the <code class="docutils literal notranslate"><span class="pre">set</span></code> command:</p>
+<div class="admonition-set signature toggle-shown dropdown admonition" id="signature-0">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">set</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">&lt;variable&gt;</span><span class="w"> </span><span class="s">&lt;value&gt;...</span><span class="w"> </span><span class="s">[PARENT_SCOPE]</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Variables in CMake are always of string type, but certain commands can interpret them as other types. If you want to declare a <em>list</em> variable, you will have to provide it as a ;-separated string. Lists can be manipulated with the <code class="docutils literal notranslate"><span class="pre">list</span></code> family of commands.</p>
+<p>You can inspect the value of any variable by <em>dereferencing</em> it with the <code class="docutils literal notranslate"><span class="pre">${}</span></code> operator, as in bash shell. For example, the following snippet sets the content of <code class="docutils literal notranslate"><span class="pre">hello</span></code> variable and then prints it:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">hello</span><span class="w"> </span><span class="s2">&quot;world&quot;</span><span class="p">)</span>
+<span class="nb">message</span><span class="p">(</span><span class="s2">&quot;hello ${hello}&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Two notes about <strong>variable references</strong>:</p>
+<ul class="simple">
+<li><p>if the variable within the <code class="docutils literal notranslate"><span class="pre">${}</span></code> operator is not set, you will get an empty string.</p></li>
+<li><p>you can <em>nest</em> variable references: <code class="docutils literal notranslate"><span class="pre">${outer_${inner_variable}_variable}</span></code>. They will be evaluated from the inside out.</p></li>
+</ul>
+<p>One of the most confusing aspects in CMake is the <strong>scoping of variables</strong>. There are three variable scopes in the DSL:</p>
+<ul>
+<li><p><strong>Function</strong>: In effect when a variable is <code class="docutils literal notranslate"><span class="pre">set</span></code> within a function, the variable will be visible within the function, but not outside.</p></li>
+<li><p><strong>Directory</strong>: In effect when processing a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> in a directory, variables in the parent folder will be available, but any that is <code class="docutils literal notranslate"><span class="pre">set</span></code> in the current folder will not be propagated to the parent.</p></li>
+<li><p><strong>Cache</strong>: These variables are <strong>persistent</strong> across calls to <code class="docutils literal notranslate"><span class="pre">cmake</span></code> and available to all scopes in the project. Modifying a cache variable requires using a special form of the <code class="docutils literal notranslate"><span class="pre">set</span></code> function:</p>
+<div class="admonition-set signature toggle-shown dropdown admonition" id="signature-1">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">set</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">&lt;variable&gt;</span><span class="w"> </span><span class="s">&lt;value&gt;...</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">&lt;type&gt;</span><span class="w"> </span><span class="s">&lt;docstring&gt;</span><span class="w"> </span><span class="s">[FORCE]</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</li>
+</ul>
+<p>Here is a list of few <strong>CMake-defined variables</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PROJECT_BINARY_DIR</span></code>. This is the build folder for the project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PROJECT_SOURCE_DIR</span></code>. This is the location of the root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> in the project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_CURRENT_LIST_DIR</span></code>. This is the folder for the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> currently being processed.</p></li>
+</ul>
+<p>Help on a specific built-in variable can be obtained with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-variable<span class="w"> </span>PROJECT_BINARY_DIR
+</pre></div>
+</div>
+</section>
+<section id="commands">
+<h4>Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h4>
+<p>These are provided by CMake and are essential building blocks of the DSL, as they allow you to manipulate variables. They include control flow constructs and the <code class="docutils literal notranslate"><span class="pre">target_*</span></code> family of commands.</p>
+<p>You can find a complete list of available commands with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-command-list
+</pre></div>
+</div>
+<p><strong>Functions</strong> and <strong>macros</strong> are built on top of the basic built-in commands and are either CMake- or user-defined. These prove useful to avoid repetition in your CMake scripts.</p>
+<p>The difference between a function and a macro is their <em>scope</em>:</p>
+<ul class="simple">
+<li><p><strong>Functions</strong> have their own scope: variables defined inside a function are not propagated back to the caller.</p></li>
+<li><p><strong>Macros</strong> do not have their own scope: variables from the parent scope can be modified and new variables in the parent scope can be set.</p></li>
+</ul>
+<p>Help on a specific built-in command, function or macro can be obtained with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-command<span class="w"> </span>target_link_libraries
+</pre></div>
+</div>
+</section>
+<section id="modules">
+<h4>Modules<a class="headerlink" href="#modules" title="Link to this heading"></a></h4>
+<p>These are collections of functions and macros and are either CMake- or user-defined. CMake comes with a rich ecosystem of modules and you will probably write a few of your own to encapulate frequently used functions or macros in your CMake scripts.</p>
+<p>You will have to include the module to use its contents, for example:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include</span><span class="p">(</span><span class="s">CMakePrintHelpers</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The full list of built-in modules is available with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-module-list
+</pre></div>
+</div>
+<p>Help on a specific built-in module can be obtained with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--help-module<span class="w"> </span>CMakePrintHelpers
+</pre></div>
+</div>
+</section>
+</section>
+<section id="flow-control">
+<h3>Flow control<a class="headerlink" href="#flow-control" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">foreach</span></code> commands are available as flow control constructs in the CMake DSL and you are surely familiar with their use in other programming languages.</p>
+<p>Since <em>all</em> variables in CMake are strings, the syntax for <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">foreach</span></code> appears in a few different variants.</p>
+<div class="admonition-if signature toggle-shown dropdown admonition" id="signature-2">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">if</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="p">(</span><span class="s">&lt;condition&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="c"># &lt;commands&gt;</span>
+<span class="nb">elseif</span><span class="p">(</span><span class="s">&lt;condition&gt;</span><span class="p">)</span><span class="w"> </span><span class="c"># optional block, can be repeated</span>
+<span class="w">  </span><span class="c"># &lt;commands&gt;</span>
+<span class="nb">else</span><span class="p">()</span><span class="w">              </span><span class="c"># optional block</span>
+<span class="w">  </span><span class="c"># &lt;commands&gt;</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The truth value of the conditions in the <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">elseif</span></code> blocks is determined by boolean operators. In the CMake DSL:</p>
+<ul class="simple">
+<li><p>True is any expression evaluating to: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">ON</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">YES</span></code>, and  <code class="docutils literal notranslate"><span class="pre">Y</span></code>.</p></li>
+<li><p>False is any expression evaluating to: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">OFF</span></code>, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>,  <code class="docutils literal notranslate"><span class="pre">N</span></code>, <code class="docutils literal notranslate"><span class="pre">IGNORE</span></code>, and <code class="docutils literal notranslate"><span class="pre">NOTFOUND</span></code>.</p></li>
+</ul>
+<p>CMake offers boolean operator for string comparisons, such as <code class="docutils literal notranslate"><span class="pre">STREQUAL</span></code> for string equality, and for version comparisons, such as <code class="docutils literal notranslate"><span class="pre">VERSION_EQUAL</span></code>.</p>
+<div class="admonition-variable-expansions-in-conditionals callout admonition" id="callout-0">
+<p class="admonition-title">Variable expansions in conditionals</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">if</span></code> command expands the contents of variables before evaluating their truth value. See <a class="reference external" href="https://cmake.org/cmake/help/latest/command/if.html?highlight=#variable-expansion">official documentation</a> for further details.</p>
+</div>
+<div class="admonition-exercise-2-conditionals-in-cmake exercise important admonition" id="exercise-0">
+<p class="admonition-title">Exercise 2: Conditionals in CMake</p>
+<p>Modify the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> from the previous exercise to build either a <em>static</em> or a <em>shared</em> library depending on the value of the boolean <code class="docutils literal notranslate"><span class="pre">MAKE_SHARED_LIBRARY</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Define the <code class="docutils literal notranslate"><span class="pre">MAKE_SHARED_LIBRARY</span></code> variable.</p></li>
+<li><p>Write a conditional checking the variable. In each branch call <code class="docutils literal notranslate"><span class="pre">add_library</span></code> appropriately.</p></li>
+</ol>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Fortran</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p>You can find a scaffold project in the <code class="docutils literal notranslate"><span class="pre">content/code/02_conditionals/cxx</span></code> folder. A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p>You can find a scaffold project in the <code class="docutils literal notranslate"><span class="pre">content/code/02_conditionals/fortran</span></code> folder. A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div></div>
+</div>
+<p>You can perform the same operation on a collection of items with <code class="docutils literal notranslate"><span class="pre">foreach</span></code>:</p>
+<div class="admonition-foreach signature toggle-shown dropdown admonition" id="signature-3">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">foreach</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">foreach</span><span class="p">(</span><span class="s">&lt;loop_var&gt;</span><span class="w"> </span><span class="s">&lt;items&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="c"># &lt;commands&gt;</span>
+<span class="nb">endforeach</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The list of items is either space- or ;-separated. <code class="docutils literal notranslate"><span class="pre">break()</span></code> and <code class="docutils literal notranslate"><span class="pre">continue()</span></code> are also available.</p>
+<div class="admonition-loops-in-cmake typealong toggle-shown dropdown admonition" id="typealong-0">
+<p class="admonition-title">Loops in CMake</p>
+<p>In this typealong, we will show how to use <code class="docutils literal notranslate"><span class="pre">foreach</span></code> and lists in CMake. We will work from a scaffold project in the <code class="docutils literal notranslate"><span class="pre">content/code/03_loops-cxx</span></code> folder.</p>
+<p>The goal is to compile a library from a bunch of source files: some of them are to be compiled with <code class="docutils literal notranslate"><span class="pre">-O3</span></code> optimization level, while some others with <code class="docutils literal notranslate"><span class="pre">-O2</span></code>. We will set the compilation flags as properties on the library target. Targets and properties will be discussed at greater length in <a class="reference internal" href="index.html#targets"><span class="std std-ref">Target-based build systems with CMake</span></a>.</p>
+<p>A working solution is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+<p>It is instructive to browse the build folder for the project using the <code class="docutils literal notranslate"><span class="pre">tree</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ml<span class="w"> </span>tree/2.1.1
+tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span><span class="w"> </span>build
+</pre></div>
+</div>
+<p>Then you can get the code structure like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>build
+├──<span class="w"> </span>CMakeCache.txt
+├──<span class="w"> </span>CMakeFiles
+│<span class="w">   </span>├──<span class="w"> </span><span class="m">3</span>.27.7
+│<span class="w">   </span>├──<span class="w"> </span>cmake.check_cache
+│<span class="w">   </span>├──<span class="w"> </span>CMakeConfigureLog.yaml
+│<span class="w">   </span>├──<span class="w"> </span>CMakeDirectoryInformation.cmake
+│<span class="w">   </span>├──<span class="w"> </span>CMakeScratch
+│<span class="w">   </span>├──<span class="w"> </span>compute-areas.dir
+│<span class="w">   </span>├──<span class="w"> </span>geometry.dir
+│<span class="w">   </span>├──<span class="w"> </span>Makefile2
+│<span class="w">   </span>├──<span class="w"> </span>Makefile.cmake
+│<span class="w">   </span>├──<span class="w"> </span>pkgRedirects
+│<span class="w">   </span>├──<span class="w"> </span>progress.marks
+│<span class="w">   </span>└──<span class="w"> </span>TargetDirectories.txt
+├──<span class="w"> </span>cmake_install.cmake
+├──<span class="w"> </span>compute-areas
+├──<span class="w"> </span>libgeometry.a
+└──<span class="w"> </span>Makefile
+</pre></div>
+</div>
+<p>We note that:</p>
+<ul class="simple">
+<li><p>The project was configured with <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> generator.</p></li>
+<li><p>The cache is a plain-text file <code class="docutils literal notranslate"><span class="pre">CMakeCache.txt</span></code>.</p></li>
+<li><p>For every target in the project, CMake will create a subfolder <code class="docutils literal notranslate"><span class="pre">&lt;target&gt;.dir</span></code> under <code class="docutils literal notranslate"><span class="pre">CMakeFiles</span></code>. The intermediate object files are stored in these folders, together with compiler flags and link line.</p></li>
+<li><p>The build artifacts, <code class="docutils literal notranslate"><span class="pre">compute-areas</span></code> and <code class="docutils literal notranslate"><span class="pre">libgeometry.a</span></code>,  are stored at the root of the build tree.</p></li>
+</ul>
+</div>
+</section>
+<section id="printing-messages">
+<h3>Printing messages<a class="headerlink" href="#printing-messages" title="Link to this heading"></a></h3>
+<p>You will most likely have to engage in debugging your CMake scripts at some point. Print-based debugging is the most effective way and the main workhorse for this will be the <code class="docutils literal notranslate"><span class="pre">message</span></code> command:</p>
+<div class="admonition-message signature toggle-shown dropdown admonition" id="signature-4">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">message</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">message</span><span class="p">(</span><span class="s">[&lt;mode&gt;]</span><span class="w"> </span><span class="s2">&quot;message to display&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-parameters parameters dropdown admonition" id="parameters-0">
+<p class="admonition-title">Parameters</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;mode&gt;</span></code></dt><dd><p>What type of message to display, for example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">STATUS</span></code>, for incidental information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FATAL_ERROR</span></code>, to report an error that prevents further processing and generation.</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</div>
+<p>It should be noted that <code class="docutils literal notranslate"><span class="pre">message</span></code> can be a bit awkward to work with, especially when you want to print the name <em>and</em> value of a variable. Including the built-in module <code class="docutils literal notranslate"><span class="pre">CMakePrintHelpers</span></code> will make your life easier when debugging, since it provides the <code class="docutils literal notranslate"><span class="pre">cmake_print_variables</span></code> function:</p>
+<div class="admonition-cmake-print-variables signature toggle-shown dropdown admonition" id="signature-5">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">cmake_print_variables</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_print_variables</span><span class="p">(</span><span class="s">var1</span><span class="w"> </span><span class="s">var2</span><span class="w"> </span><span class="s">...</span><span class="w"> </span><span class="s">varN</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This command accepts an arbitrary number of variables and prints their name <em>and</em> value to standard output.
+For example:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include</span><span class="p">(</span><span class="s">CMakePrintHelpers</span><span class="p">)</span>
+<span class="nb">cmake_print_variables</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span><span class="w"> </span><span class="s">CMAKE_MAJOR_VERSION</span><span class="w"> </span><span class="s">DOES_NOT_EXIST</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>gives:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-- CMAKE_C_COMPILER=&quot;/usr/bin/gcc&quot; ; CMAKE_MAJOR_VERSION=&quot;2&quot; ; DOES_NOT_EXIST=&quot;&quot;
+</pre></div>
+</div>
+</div>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>CMake offers a full-fledged DSL which empowers you to write complex <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p>Variables have scoping rules.</p></li>
+<li><p>The structure of the project is mirrored in the build folder.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<span id="document-targets"></span><section id="target-based-build-systems-with-cmake">
+<span id="targets"></span><h2>Target-based build systems with CMake<a class="headerlink" href="#target-based-build-systems-with-cmake" title="Link to this heading"></a></h2>
+<div class="admonition-questions questions admonition" id="questions-0">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can we handle complex projects with CMake?</p></li>
+<li><p>What exactly are <strong>targets</strong> in the CMake domain-specific language (DSL)?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn that the <strong>basic elements</strong> in CMake are not variables, but targets.</p></li>
+<li><p>Learn about properties of targets and how to use them.</p></li>
+<li><p>Learn how to use <strong>visibility levels</strong> to express dependencies between targets.</p></li>
+<li><p>Learn how to handle multiple targets in one project.</p></li>
+<li><p>Learn how to work with projects spanning multiple folders.</p></li>
+</ul>
+</div>
+<p>Real-world projects require more than compiling a few source files into executables and/or libraries. In most cases, you will come to projects comprising hundreds of source files sprawling in a complex source tree.</p>
+<p>With the advent of CMake 3.0, also known as <strong>Modern CMake</strong>, there has been a significant shift that the CMake domain-specific language (DSL) is structured, which can help you keep the complexity of the build system in check. Rather than relying on <strong>variables</strong> to convey information in a project, all what you need in modern CMake is <strong>targets</strong> and <strong>properties</strong>.</p>
+<section id="id1">
+<h3>Targets<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>A target is the basic element in the CMake DSL, which can be declared by either <code class="docutils literal notranslate"><span class="pre">add_executable</span></code> or <code class="docutils literal notranslate"><span class="pre">add_library</span></code>. Any target has a collection of <strong>properties</strong>, which define:</p>
+<ul class="simple">
+<li><p><em>how</em> the build artifact should be produced,</p></li>
+<li><p><em>how</em> it should be used by other targets in the project that depend on it.</p></li>
+</ul>
+<figure class="align-center">
+<img alt="_images/target.svg" src="_images/target.svg" />
+</figure>
+<p>In CMake, the five most used commands used to handle targets are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target_sources</span></code>, specifying which source files to use when compiling a target.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_compile_options</span></code>, specifying which compiler flags to use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_compile_definitions</span></code>, specifying which compiler definitions to use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_include_directories</span></code>, specifying which directories will contain header (for C/C++) and module (for Fortran) files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code>, specifying which libraries to link into the current target.</p></li>
+</ul>
+<p>There are additional commands in the <code class="docutils literal notranslate"><span class="pre">target_*</span></code> family:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-command-list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^target_&quot;</span>
+
+target_compile_definitions
+target_compile_features
+target_compile_options
+target_include_directories
+target_link_directories
+target_link_libraries
+target_link_options
+target_precompile_headers
+target_sources
+</pre></div>
+</div>
+</section>
+<section id="visibility-levels">
+<h3>Visibility levels<a class="headerlink" href="#visibility-levels" title="Link to this heading"></a></h3>
+<p>Why it is robust to use targets and properties than using variables? Given a target <code class="docutils literal notranslate"><span class="pre">tgtX</span></code>, we can invoke one command in the <code class="docutils literal notranslate"><span class="pre">target_*</span></code> family as follows.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">tgtX</span>
+<span class="w">  </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">tgt1</span>
+<span class="w">  </span><span class="s">INTERFACE</span><span class="w"> </span><span class="s">tgt2</span>
+<span class="w">  </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">tgt3</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="_images/target_inheritance.svg" src="_images/target_inheritance.svg" />
+<figcaption>
+<p><span class="caption-text">Properties on targets have varied <strong>visibility levels</strong>, which determine how CMake should propagate them between interdependent targets.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition-understanding-visibility-levels typealong toggle-shown dropdown admonition" id="typealong-0">
+<p class="admonition-title">Understanding visibility levels</p>
+<p>Visibility levels <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code>, or <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> are very powerful and herein we will briefly demonstrate their difference.</p>
+<p>A complete source code is available in the <code class="docutils literal notranslate"><span class="pre">content/code/04_visibility-levels/</span></code> folder.</p>
+<p>In this code example, we want to compile a C++ library and an executable:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The library code is in the <code class="docutils literal notranslate"><span class="pre">account</span></code> subfolder. It consists of one source (<code class="docutils literal notranslate"><span class="pre">account.cpp</span></code>) and one header file (<code class="docutils literal notranslate"><span class="pre">account.hpp</span></code>).</p></li>
+<li><p>The header file and the shared library are needed for the <code class="docutils literal notranslate"><span class="pre">bank.cpp</span></code> to produce the <code class="docutils literal notranslate"><span class="pre">bank</span></code> executable.</p></li>
+<li><p>We also want to use the <code class="docutils literal notranslate"><span class="pre">-ffast-math</span></code> compiler flag and propagate it throughout the project.</p></li>
+</ul>
+</div></blockquote>
+<p>Thus code structure is arranged in the following format:</p>
+<ol class="arabic">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">account</span></code> target declares the <code class="docutils literal notranslate"><span class="pre">account.cpp</span></code> source file as <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code> since it is only needed to produce the shared library.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_sources</span><span class="p">(</span><span class="s">account</span>
+<span class="w">  </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="s">account.cpp</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-ffast-math</span></code> is instead <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code> as since it needs to be propagated to all targets consuming <code class="docutils literal notranslate"><span class="pre">account</span></code>.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_compile_options</span><span class="p">(</span><span class="s">account</span>
+<span class="w">  </span><span class="s">PUBLIC</span>
+<span class="w">    </span><span class="s2">&quot;-ffast-math&quot;</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">account</span></code> folder is an include directory with <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code>
+visibility because only targets consuming <code class="docutils literal notranslate"><span class="pre">account</span></code> need to know where
+<code class="docutils literal notranslate"><span class="pre">account.hpp</span></code> is located.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">account</span>
+<span class="w">  </span><span class="s">INTERFACE</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonition-rule-of-thumb-for-visibility-settings callout admonition" id="callout-0">
+<p class="admonition-title">Rule of thumb for visibility settings</p>
+<p>When working out which visibility settings to use for the properties of your
+targets you can refer to the following table:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Who needs?</p></th>
+<th class="head" colspan="2"><p>Others</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Target</p></th>
+<th class="head"><p><strong>YES</strong></p></th>
+<th class="head"><p><strong>NO</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p><strong>YES</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>NO</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code></p></td>
+<td><p>N/A</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<p>An additional code example to demonstrate the difference of the visibility levels <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code>, or <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> is available in the <a class="reference external" href="https://coderefinery.github.io/cmake-workshop/targets/#visibility-levels">CodeRefinery CMake Workshop</a> lesson materials.</p>
+</section>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h3>
+<p>CMake lets you set properties at many different levels of visibility across the project:</p>
+<ul class="simple">
+<li><p><strong>Global scope</strong>. These are equivalent to variables set in the root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>. Their use is, however, more powerful as they can be set from <em>any</em> leaf <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p><strong>Directory scope</strong>. These are equivalent to variables set in a given leaf <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p><strong>Target</strong>. These are the properties set on targets that we discussed above.</p></li>
+<li><p><strong>Test</strong>.</p></li>
+<li><p><strong>Source files</strong>. For example, compiler flags.</p></li>
+<li><p><strong>Cache entries</strong>.</p></li>
+<li><p><strong>Installed files</strong>.</p></li>
+</ul>
+<p>For a complete list of properties known to CMake:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-properties<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</pre></div>
+</div>
+<p>You can get the current value of any property with <code class="docutils literal notranslate"><span class="pre">get_property</span></code> and set the value of any property with <code class="docutils literal notranslate"><span class="pre">set_property</span></code>.</p>
+</section>
+<section id="multiple-folders">
+<h3>Multiple folders<a class="headerlink" href="#multiple-folders" title="Link to this heading"></a></h3>
+<p>In the code example about the visibility levels, we have two <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files, one in the <code class="docutils literal notranslate"><span class="pre">account</span></code> subfolder and one in the main folder. This enables the code maintenance being easier if we split the CMake configuration into multiple <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> with the help of <code class="docutils literal notranslate"><span class="pre">add_subdirectory</span></code>. Our goal is to have multiple <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files as close as possible to the source files.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>project/
+├── CMakeLists.txt           &lt;--- Root
+├── external
+│   ├── CMakeLists.txt       &lt;--- Leaf at level 1
+└── src
+    ├── CMakeLists.txt       &lt;--- Leaf at level 1
+    ├── evolution
+    │   ├── CMakeLists.txt   &lt;--- Leaf at level 2
+    ├── initial
+    │   ├── CMakeLists.txt   &lt;--- Leaf at level 2
+    ├── io
+    │   ├── CMakeLists.txt   &lt;--- Leaf at level 2
+    └── parser
+        └── CMakeLists.txt   &lt;--- Leaf at level 2
+</pre></div>
+</div>
+<p>Each folder in a multi-folder project will contain a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>: a source tree with one <strong>root</strong> and many <strong>leaves</strong>.</p>
+<ul class="simple">
+<li><p>The root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> will contain the invocation of the <code class="docutils literal notranslate"><span class="pre">project</span></code> command: variables and targets declared in the root have effectively global scope.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">PROJECT_SOURCE_DIR</span></code> will point to the folder containing the root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p>In order to move between the root and a leaf or between leaves, you will use the <code class="docutils literal notranslate"><span class="pre">add_subdirectory</span></code> command.</p></li>
+</ul>
+<p>Typically, you only need to pass the first argument: the folder within the build tree will be automatically computed by CMake. We can declare targets at any level, not necessarily the root: a target is visible at the level at which it is declared and all higher levels.</p>
+<div class="admonition-exercise-05-cellular-automata exercise important admonition" id="exercise-0">
+<p class="admonition-title">Exercise 05: Cellular automata</p>
+<p>Let’s work with a project spanning multiple folders. We will implement a relatively simple code to compute and print to screen elementary <a class="reference external" href="https://en.wikipedia.org/wiki/Cellular_automaton#Elementary_cellular_automata">cellular automata</a>. We separate the sources into <code class="docutils literal notranslate"><span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">external</span></code> to simulate a nested project which reuses an external project.</p>
+<p>Your goal is to:</p>
+<ul>
+<li><ol class="arabic simple">
+<li><p>Build the main executable at <code class="docutils literal notranslate"><span class="pre">content/code/05_automata/cxx/</span></code> for C++ and <code class="docutils literal notranslate"><span class="pre">content/code/05_automata/fortran/</span></code> for Fortran.</p></li>
+</ol>
+</li>
+<li><ol class="arabic simple" start="2">
+<li><p>Where are the obtained executables located in the build tree? Remember that CMake generates a build tree mirroring the source tree.</p></li>
+</ol>
+</li>
+<li><p>3. The executable will accept 3 arguments: the length, number of steps, and
+automaton rule. You can run it with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>automata<span class="w"> </span><span class="m">40</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">30</span>
+</pre></div>
+</div>
+<p>The output will be:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>length: 40
+number of steps: 5
+rule: 30
+                    *
+                   ***
+                  **  *
+                 ** ****
+                **  *   *
+               ** **** ***
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition-the-internal-dependency-tree typealong toggle-shown dropdown admonition" id="typealong-1">
+<p class="admonition-title">The internal dependency tree</p>
+<p>You can visualize the dependencies between targets in the project with Graphviz (make sure that you have installed the Graphviz package):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+$<span class="w"> </span>cmake<span class="w"> </span>--graphviz<span class="o">=</span>project.dot<span class="w"> </span>..
+$<span class="w"> </span>dot<span class="w"> </span>-T<span class="w"> </span>svg<span class="w"> </span>project.dot<span class="w"> </span>-o<span class="w"> </span>project.svg
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<img alt="_images/graphviz-multiple-folder-project.svg" src="_images/graphviz-multiple-folder-project.svg" />
+<figcaption>
+<p><span class="caption-text">The dependencies between targets in the cellular automata project.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>Using <strong>targets</strong>, you can achieve granular control over how artifacts are built and how their dependencies are handled.</p></li>
+<li><p>Compiler flags, definitions, source files, include folders, link libraries, and linker options are <strong>properties</strong> of a target.</p></li>
+<li><p>Avoid using variables to express dependencies between targets: use visibility levels <code class="docutils literal notranslate"><span class="pre">PRIVATE</span></code>, <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code> and let CMake figure out the details.</p></li>
+<li><p>To keep the complexity of the build system at a minimum, each folder in a multi-folder project should have its own CMake script.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<span id="document-probing"></span><section id="probing-compilation-linking-and-execution">
+<span id="probing"></span><h2>Probing compilation, linking, and execution<a class="headerlink" href="#probing-compilation-linking-and-execution" title="Link to this heading"></a></h2>
+<div class="admonition-questions questions admonition" id="questions-0">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can you add custom steps to your build system with CMake?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn how and when to use <code class="docutils literal notranslate"><span class="pre">execute_process</span></code></p></li>
+<li><p>Learn how to use <code class="docutils literal notranslate"><span class="pre">add_custom_command</span></code> with targets.</p></li>
+<li><p>Learn how to test compilation, linking, and execution.</p></li>
+</ul>
+</div>
+<p>CMake lets you run arbitrary commands at any stage in the project lifecycle.
+This is yet another mechanism for fine-grained customization and we will discuss
+some of the options in this episode.</p>
+<section id="running-custom-commands-at-configure-time">
+<h3>Running custom commands at <em>configure-time</em><a class="headerlink" href="#running-custom-commands-at-configure-time" title="Link to this heading"></a></h3>
+<p>The most straightforward method is to explicitly run one (or more) child
+process(es) when invoking the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> command.  This is achieved with the
+<code class="docutils literal notranslate"><span class="pre">execute_process</span></code> command.</p>
+<div class="admonition-execute-process-https-cmake-org-cmake-help-latest-command-execute-process-html signature toggle-shown dropdown admonition" id="signature-0">
+<p class="admonition-title"><a class="reference external" href="https://cmake.org/cmake/help/latest/command/execute_process.html">execute_process</a></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">execute_process</span><span class="p">(</span><span class="s">COMMAND</span><span class="w"> </span><span class="s">&lt;cmd1&gt;</span><span class="w"> </span><span class="s">[args1...]]</span>
+<span class="w">                </span><span class="s">[COMMAND</span><span class="w"> </span><span class="s">&lt;cmd2&gt;</span><span class="w"> </span><span class="s">[args2...]</span><span class="w"> </span><span class="s">[...]]</span>
+<span class="w">                </span><span class="s">[WORKING_DIRECTORY</span><span class="w"> </span><span class="s">&lt;directory&gt;]</span>
+<span class="w">                </span><span class="s">[TIMEOUT</span><span class="w"> </span><span class="s">&lt;seconds&gt;]</span>
+<span class="w">                </span><span class="s">[RESULT_VARIABLE</span><span class="w"> </span><span class="s">&lt;variable&gt;]</span>
+<span class="w">                </span><span class="s">[RESULTS_VARIABLE</span><span class="w"> </span><span class="s">&lt;variable&gt;]</span>
+<span class="w">                </span><span class="s">[OUTPUT_VARIABLE</span><span class="w"> </span><span class="s">&lt;variable&gt;]</span>
+<span class="w">                </span><span class="s">[ERROR_VARIABLE</span><span class="w"> </span><span class="s">&lt;variable&gt;]</span>
+<span class="w">                </span><span class="s">[INPUT_FILE</span><span class="w"> </span><span class="s">&lt;file&gt;]</span>
+<span class="w">                </span><span class="s">[OUTPUT_FILE</span><span class="w"> </span><span class="s">&lt;file&gt;]</span>
+<span class="w">                </span><span class="s">[ERROR_FILE</span><span class="w"> </span><span class="s">&lt;file&gt;]</span>
+<span class="w">                </span><span class="s">[OUTPUT_QUIET]</span>
+<span class="w">                </span><span class="s">[ERROR_QUIET]</span>
+<span class="w">                </span><span class="s">[OUTPUT_STRIP_TRAILING_WHITESPACE]</span>
+<span class="w">                </span><span class="s">[ERROR_STRIP_TRAILING_WHITESPACE]</span>
+<span class="w">                </span><span class="s">[ENCODING</span><span class="w"> </span><span class="s">&lt;name&gt;]</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Executes one or more child processes.  The standard output and standard error
+streams are recorded into <code class="docutils literal notranslate"><span class="pre">OUTPUT_VARIABLE</span></code> and <code class="docutils literal notranslate"><span class="pre">ERROR_VARIABLE</span></code>,
+respectively. The result of the last child process is saved into
+<code class="docutils literal notranslate"><span class="pre">RESULT_VARIABLE</span></code>.</p>
+</div>
+<p>It is important to note that any command invoked through <code class="docutils literal notranslate"><span class="pre">execute_process</span></code> will only be run at <strong>configure-time</strong>, <em>i.e.</em> when running the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> command. You <strong>should not</strong> rely on <code class="docutils literal notranslate"><span class="pre">execute_process</span></code> to update any artifacts at <strong>build-time</strong>.</p>
+<div class="admonition-exercise-06-find-a-python-module exercise important admonition" id="exercise-0">
+<p class="admonition-title">Exercise 06: Find a Python module</p>
+<p>In this exercise, we’ll use <a class="reference external" href="https://cmake.org/cmake/help/latest/command/execute_process.html">execute_process</a> to check whether the <a class="reference external" href="https://cffi.readthedocs.io/en/latest/index.html">cffi</a> Python module is installed in your environment. On the command line, you would do:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import cffi; print(cffi.__version__)&quot;</span>
+</pre></div>
+</div>
+<p>Your goal is to replicate the same in CMake. The scaffold code is in <code class="docutils literal notranslate"><span class="pre">content/code/06_find_cffi</span></code>. You will have to modify the call to <code class="docutils literal notranslate"><span class="pre">execute_process</span></code> to run the command above.</p>
+<p>A working example is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div>
+<p>Note the use of <code class="docutils literal notranslate"><span class="pre">find_package(Python</span> <span class="pre">REQUIRED)</span></code> to obtain the <code class="docutils literal notranslate"><span class="pre">python</span></code> executable. CMake comes with many modules dedicated to the detection of dependencies, such as Python. These are conventionally called <code class="docutils literal notranslate"><span class="pre">Find&lt;dependency&gt;.cmake</span></code> and you can inspect their documentation with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-module<span class="w"> </span>FindPython<span class="w"> </span><span class="p">|</span><span class="w"> </span>more
+</pre></div>
+</div>
+<p>We will revisit uses of <code class="docutils literal notranslate"><span class="pre">find_package</span></code> later on in <a class="reference internal" href="index.html#dependencies"><span class="std std-ref">Finding and using dependencies</span></a>.</p>
+</section>
+<section id="custom-commands-for-your-targets">
+<h3>Custom commands for your targets<a class="headerlink" href="#custom-commands-for-your-targets" title="Link to this heading"></a></h3>
+<p>As mentioned, the main problem of <code class="docutils literal notranslate"><span class="pre">execute_process</span></code> is that it will run a command at <em>configure-time</em>, when the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> command is first invoked. It is thus <em>not</em> a viable alternative if we intend to perform some specific actions depending on targets or make the result of the custom commands a dependency for other targets.</p>
+<p>Both cases have real-world examples, such as when using automatically generated code. The CMake command <code class="docutils literal notranslate"><span class="pre">add_custom_command</span></code> can be used in some of this instances.</p>
+<div class="admonition-add-custom-command-https-cmake-org-cmake-help-latest-command-add-custom-command-html signature toggle-shown dropdown admonition" id="signature-1">
+<p class="admonition-title"><a class="reference external" href="https://cmake.org/cmake/help/latest/command/add_custom_command.html">add_custom_command</a></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_custom_command</span><span class="p">(</span><span class="s">TARGET</span><span class="w"> </span><span class="s">&lt;target&gt;</span>
+<span class="w">             </span><span class="s">PRE_BUILD</span><span class="w"> </span><span class="s">|</span><span class="w"> </span><span class="s">PRE_LINK</span><span class="w"> </span><span class="s">|</span><span class="w"> </span><span class="s">POST_BUILD</span>
+<span class="w">             </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">command1</span><span class="w"> </span><span class="s">[ARGS]</span><span class="w"> </span><span class="s">[args1...]</span>
+<span class="w">             </span><span class="s">[COMMAND</span><span class="w"> </span><span class="s">command2</span><span class="w"> </span><span class="s">[ARGS]</span><span class="w"> </span><span class="s">[args2...]</span><span class="w"> </span><span class="s">...]</span>
+<span class="w">             </span><span class="s">[BYPRODUCTS</span><span class="w"> </span><span class="s">[files...]]</span>
+<span class="w">             </span><span class="s">[WORKING_DIRECTORY</span><span class="w"> </span><span class="s">dir]</span>
+<span class="w">             </span><span class="s">[COMMENT</span><span class="w"> </span><span class="s">comment]</span>
+<span class="w">             </span><span class="s">[VERBATIM]</span><span class="w"> </span><span class="s">[USES_TERMINAL]</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Add one or more custom commands to a target, such as a library or an executable. The commands can be executed before linking (with <code class="docutils literal notranslate"><span class="pre">PRE_BUILD</span></code> and <code class="docutils literal notranslate"><span class="pre">PRE_LINK</span></code>) or after (with <code class="docutils literal notranslate"><span class="pre">POST_BUILD</span></code>)</p>
+</div>
+<div class="admonition-exercise-07-before-and-after-build exercise important admonition" id="exercise-1">
+<p class="admonition-title">Exercise 07: Before and after build</p>
+<p>We want to perform some action before and after building a target, in this case a Fortran executable:</p>
+<ul class="simple">
+<li><p>Before building, we want to read the link line, as produced by CMake, and echo it to standard output. We use the <code class="docutils literal notranslate"><span class="pre">echo-file.py</span></code> Python script.</p></li>
+<li><p>After building, we want to check the size of the static allocations in the binary, by invoking the <code class="docutils literal notranslate"><span class="pre">size</span></code> command. We use the <code class="docutils literal notranslate"><span class="pre">static-size.py</span></code> Python script.</p></li>
+</ul>
+<p>The scaffold code is in <code class="docutils literal notranslate"><span class="pre">content/code/07_pre_post-f</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Add CMake commands to build the <code class="docutils literal notranslate"><span class="pre">example</span></code> executable from the Fortran sources.  Find the text file with the link line under the build folder. Hint: have a look in <code class="docutils literal notranslate"><span class="pre">CMakeFiles</span></code> and keep in mind the name you gave to the target.</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">add_custom_command</span></code> with <code class="docutils literal notranslate"><span class="pre">PRE_LINK</span></code> to invoke the <code class="docutils literal notranslate"><span class="pre">echo-file.py</span></code> Python script.</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">add_custom_command</span></code> with <code class="docutils literal notranslate"><span class="pre">POST_BUILD</span></code> to invoke the <code class="docutils literal notranslate"><span class="pre">static-size.py</span></code> Python script.</p></li>
+</ol>
+<p>A working example is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div>
+</section>
+<section id="testing-compilation-linking-and-execution">
+<h3>Testing compilation, linking, and execution<a class="headerlink" href="#testing-compilation-linking-and-execution" title="Link to this heading"></a></h3>
+<p>We also want to be able to run checks on our compilers and linkers. Or check whether a certain library can be used correctly before attempting to build our own artifacts. CMake provides modules and commands for these purposes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Check&lt;LANG&gt;CompilerFlag</span></code> providing the <code class="docutils literal notranslate"><span class="pre">check_&lt;LANG&gt;_compiler_flag</span></code> function, to check whether a compiler flag is valid for the compiler in use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Check&lt;LANG&gt;SourceCompiles</span></code> providing the <code class="docutils literal notranslate"><span class="pre">check_&lt;LANG&gt;_source_compiles</span></code>.
+Which check whether a given source file compiles with the compiler in use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Check&lt;LANG&gt;SourceRuns</span></code> providing the <code class="docutils literal notranslate"><span class="pre">check_&lt;LANG&gt;_source_runs</span></code>, to make sure that a given source snippet compiles, links, and runs.</p></li>
+</ul>
+<p>In all cases, <code class="docutils literal notranslate"><span class="pre">&lt;LANG&gt;</span></code> can be one of <code class="docutils literal notranslate"><span class="pre">CXX</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code> or <code class="docutils literal notranslate"><span class="pre">Fortran</span></code>.</p>
+<div class="admonition-exercise-08-check-that-a-compiler-accepts-a-compiler-flag exercise important admonition" id="exercise-2">
+<p class="admonition-title">Exercise 08: Check that a compiler accepts a compiler flag</p>
+<p>Compilers evolve: they add and/or remove flags and sometimes you will face the need to test whether some flags are available before using them in your build.</p>
+<p>The scaffold code is in <code class="docutils literal notranslate"><span class="pre">content/code/08_check_compiler_flag</span></code>.</p>
+<ol class="arabic">
+<li><p>Implement a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to build an executable from the <code class="docutils literal notranslate"><span class="pre">asan-example.cpp</span></code> source file.</p></li>
+<li><p>Check that the address sanitizer flags are available with <code class="docutils literal notranslate"><span class="pre">check_cxx_compiler_flag</span></code>. The flags to check are <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span> <span class="pre">-fno-omit-frame-pointer</span></code>. Find the command signature with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-module<span class="w"> </span>CheckCXXCompilerFlag
+</pre></div>
+</div>
+</li>
+<li><p>If the flags do work, add them to the those used to compile the executable target with <code class="docutils literal notranslate"><span class="pre">target_compile_options</span></code>.</p></li>
+</ol>
+<p>A working example is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div>
+<div class="admonition-exercise-09-testing-runtime-capabilities exercise important admonition" id="exercise-3">
+<p class="admonition-title">Exercise 09: Testing runtime capabilities</p>
+<p>Testing that some features will work properly for your code requires not only
+compiling an object files, but also linking an executable and running it
+successfully.</p>
+<p>The scaffold code is in <code class="docutils literal notranslate"><span class="pre">content/code/09_check_source_runs</span></code>.</p>
+<ol class="arabic">
+<li><p>Create an executable target from the source file <code class="docutils literal notranslate"><span class="pre">use-uuid.cpp</span></code>.</p></li>
+<li><p>Add a check that linking against the library produces working executables. Use the following C code as test:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uuid/uuid.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">uuid_t</span><span class="w"> </span><span class="n">uuid</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uuid_generate</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">check_c_source_runs</span></code> requires the test source code to be passed in as a <em>string</em>. Find the command signature with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-module<span class="w"> </span>CheckCSourceRuns
+</pre></div>
+</div>
+</li>
+<li><p>If the test is successful, link executable target against the UUID library: use the <code class="docutils literal notranslate"><span class="pre">PkgConfig::UUID</span></code> target as argument to <code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code>.</p></li>
+</ol>
+<p>A working example is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>You can customize the build system by executing custom commands.</p></li>
+<li><p>CMake offers commands to probe compilation, linking, and execution.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<span id="document-dependencies"></span><section id="finding-and-using-dependencies">
+<span id="dependencies"></span><h2>Finding and using dependencies<a class="headerlink" href="#finding-and-using-dependencies" title="Link to this heading"></a></h2>
+<div class="admonition-questions questions admonition" id="questions-0">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can I use CMake to detect and use the dependencies of my project?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn how to use <code class="docutils literal notranslate"><span class="pre">find_package</span></code>.</p></li>
+<li><p>Learn what other detection alternatives exist.</p></li>
+</ul>
+</div>
+<p>The vast majority of software projects do not happen in a vacuum: they will have
+dependencies on existing frameworks and libraries.  Good documentation will
+instruct your users to ensure that these are satisfied in their programming
+environment. The build system is the appropriate place to check that these
+preconditions are met and that your project can be built correctly.
+In this episode, we will show you few examples of how to detect and use
+dependencies in your CMake build system.</p>
+<section id="finding-dependencies">
+<h3>Finding dependencies<a class="headerlink" href="#finding-dependencies" title="Link to this heading"></a></h3>
+<p>CMake offers a family of commands to find artifacts installed on your system:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">find_file</span></code> to retrieve the full path to a file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_library</span></code> to find a library, shared or static.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_package</span></code> to find and load settings from an external project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_path</span></code> to find the directory containing a file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_program</span></code> to find an executable.</p></li>
+</ul>
+<p>The workhorse of dependency discovery is <code class="docutils literal notranslate"><span class="pre">find_package</span></code>, which will cover your
+needs in almost all use cases.</p>
+<div class="admonition-find-package-https-cmake-org-cmake-help-latest-command-find-package-html signature toggle-shown dropdown admonition" id="signature-0">
+<p class="admonition-title"><a class="reference external" href="https://cmake.org/cmake/help/latest/command/find_package.html">find_package</a></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">&lt;PackageName&gt;</span><span class="w"> </span><span class="s">[version]</span><span class="w"> </span><span class="s">[EXACT]</span><span class="w"> </span><span class="s">[QUIET]</span><span class="w"> </span><span class="s">[MODULE]</span>
+<span class="w">       </span><span class="s">[REQUIRED]</span><span class="w"> </span><span class="s s-Multiline">[[COMPONENTS] [components...]]</span>
+<span class="w">       </span><span class="s">[OPTIONAL_COMPONENTS</span><span class="w"> </span><span class="s">components...]</span>
+<span class="w">       </span><span class="s">[NO_POLICY_SCOPE]</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This command will attempt finding the package with name <code class="docutils literal notranslate"><span class="pre">&lt;PackageName&gt;</span></code> by
+searching in a number of <a class="reference external" href="https://cmake.org/cmake/help/latest/command/find_package.html?highlight=find_package#search-procedure">predefined folders</a>.
+It is possible to ask for a minimum or exact version. If <code class="docutils literal notranslate"><span class="pre">REQUIRED</span></code> is
+given, a failed search will trigger a fatal error.  The rules for the search
+are obtained from modules named <code class="docutils literal notranslate"><span class="pre">Find&lt;PackageName&gt;.cmake</span></code>.
+Packages can also have <em>components</em> and you can ask to detect just a handful of them.</p>
+</div>
+<p>We cannot stress this enough: you should <strong>only</strong> use the other commands in the
+<code class="docutils literal notranslate"><span class="pre">find_</span></code> family in very special, very narrow circumstances.  Why so?</p>
+<ol class="arabic">
+<li><p>For a large selection of common dependencies, the <code class="docutils literal notranslate"><span class="pre">Find&lt;PackageName&gt;.cmake</span></code>
+modules shipped with CMake work flawlessly and are maintained by the CMake
+developers. This lifts the burden of programming your own dependency
+detection tricks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_package</span></code> will set up <strong>imported targets</strong>: targets defined <em>outside</em>
+your project that you can use with your own targets.  The properties on
+imported targets defines <em>usage requirements</em> for the dependencies. A command
+such as:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">your-target</span>
+<span class="w">  </span><span class="s">PUBLIC</span>
+<span class="w">    </span><span class="s">imported-target</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will set compiler flags, definitions, include directories, and link libraries
+from <code class="docutils literal notranslate"><span class="pre">imported-target</span></code> to <code class="docutils literal notranslate"><span class="pre">your-target</span></code> <em>and</em> to all other targets in
+your project that will use <code class="docutils literal notranslate"><span class="pre">your-target</span></code>.</p>
+</li>
+</ol>
+<p>These two points simplify <strong>enormously</strong> the burden of dependency detection and
+consistent usage within a multi-folder project.</p>
+<section id="using-find-package">
+<h4>Using <code class="docutils literal notranslate"><span class="pre">find_package</span></code><a class="headerlink" href="#using-find-package" title="Link to this heading"></a></h4>
+<p>When attempting dependency detection with <code class="docutils literal notranslate"><span class="pre">find_package</span></code>, you should make sure that:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Find&lt;PackageName&gt;.cmake</span></code> module exists,</p></li>
+<li><p>Which components, if any, it provides, and</p></li>
+<li><p>What imported targets it will set up.</p></li>
+</ul>
+<p>A complete list of <code class="docutils literal notranslate"><span class="pre">Find&lt;PackageName&gt;.cmake</span></code> can be found from the command-line interface:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-module-list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Find&quot;</span>
+</pre></div>
+</div>
+<div class="admonition-exercise-10-using-openmp exercise important admonition" id="exercise-0">
+<p class="admonition-title">Exercise 10: Using OpenMP</p>
+<p>We want to compile the following OpenMP sample code: <a class="footnote-reference brackets" href="#omp" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// example adapted from</span>
+<span class="c1">// http://www.openmp.org/wp-content/uploads/openmp-examples-4.5.0.pdf page 85</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdlib&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">long_running_task</span><span class="p">(){</span>
+<span class="w">  </span><span class="c1">// do something</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;long_running_task&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop_body</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">){</span>
+<span class="w">  </span><span class="c1">// do something</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;i = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; j = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">parallel_work</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+<span class="cp">#pragma omp taskgroup</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="cp">#pragma omp task</span>
+<span class="w">    </span><span class="n">long_running_task</span><span class="p">();</span><span class="w"> </span><span class="c1">// can execute concurrently</span>
+
+<span class="cp">#pragma omp taskloop private(j) grainsize(500) nogroup</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// can execute concurrently</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">loop_body</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">parallel_work</span><span class="p">();</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note the usage of the <code class="docutils literal notranslate"><span class="pre">taskloop</span></code> construct, which was introduced in OpenMP
+4.5: we need to make sure our C++ compiler is suitably compatible with <em>at
+least</em> that version of the standard.</p>
+<p>From the documentation of the <code class="docutils literal notranslate"><span class="pre">FindOpenMP.cmake</span></code> module:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>--help-module<span class="w"> </span>FindOpenMP<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</pre></div>
+</div>
+<p>we find that the module provides the components <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">CXX</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">Fortran</span></code> and that <code class="docutils literal notranslate"><span class="pre">OpenMP::OpenMP_CXX</span></code> target will be provided, if
+detection is successful.
+The scaffold project is in <code class="docutils literal notranslate"><span class="pre">content/code/10_taskloop</span></code>. You will need to
+find the suitable OpenMP libary and link against the imported target.</p>
+<p>We can configure and build verbosely. <a class="footnote-reference brackets" href="#verbose" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
+Notice that compiler flags, include directories, and link libraries are properly resolved by CMake.</p>
+<p>You can find the complete working example in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div>
+<div class="admonition-exercise-11-using-mpi exercise important admonition" id="exercise-1">
+<p class="admonition-title">Exercise 11: Using MPI</p>
+<p>In this exercise, you will attempt compiling a “Hello, world” program that
+uses the message passing interface (MPI).</p>
+<ol class="arabic simple">
+<li><p>Check whether a <code class="docutils literal notranslate"><span class="pre">FindMPI.cmake</span></code> module exists in the built-in module
+library.</p></li>
+<li><p>Get acquainted with its components and the variables and imported targets
+it defines.</p></li>
+</ol>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Fortran</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p>The scaffold project is in <code class="docutils literal notranslate"><span class="pre">content/code/11_mpi-cxx</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Compile the source file to an executable.</p></li>
+<li><p>Link against the MPI imported target.</p></li>
+<li><p>Invoke a verbose build and observe how CMake compiles and links.</p></li>
+</ol>
+<p>A working example is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p>The scaffold project is in <code class="docutils literal notranslate"><span class="pre">content/code/11_mpi-f</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Compile the source file to an executable.</p></li>
+<li><p>Link against the MPI imported target.</p></li>
+<li><p>Invoke a verbose build and observe how CMake compiles and links.</p></li>
+</ol>
+<p>A working example is in the <code class="docutils literal notranslate"><span class="pre">solution</span></code> subfolder.</p>
+</div></div>
+</div>
+</section>
+<section id="alternatives-config-scripts-and-pkg-config">
+<h4>Alternatives: <code class="docutils literal notranslate"><span class="pre">Config</span></code> scripts and <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code><a class="headerlink" href="#alternatives-config-scripts-and-pkg-config" title="Link to this heading"></a></h4>
+<p>What to do when there is no built-in <code class="docutils literal notranslate"><span class="pre">Find&lt;PackageName&gt;.cmake</span></code> module for a package you depend on?
+The package developers might be already prepared to help you out:</p>
+<ul>
+<li><p>They ship the CMake-specific file <code class="docutils literal notranslate"><span class="pre">&lt;PackageName&gt;Config.cmake</span></code> which
+describes how the imported target should be made for their package.
+In this case, you need to point CMake to the folder containing the <code class="docutils literal notranslate"><span class="pre">Config</span></code> file using the
+special <code class="docutils literal notranslate"><span class="pre">&lt;PackageName&gt;_DIR</span></code> variable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-S.<span class="w"> </span>-Bbuild<span class="w"> </span>-D&lt;PackageName&gt;_DIR<span class="o">=</span>/folder/containing/&lt;PackageName&gt;Config.cmake
+</pre></div>
+</div>
+</li>
+<li><p>They include a <code class="docutils literal notranslate"><span class="pre">.pc</span></code> file, which, on Unix-like platforms, can be detected
+with the <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> utility. You can then leverage <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> through CMake:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># find pkg-config</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">PkgConfig</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="c"># ask pkg-config to find the UUID library and prepare an imported target</span>
+<span class="nb">pkg_search_module</span><span class="p">(</span><span class="s">UUID</span><span class="w"> </span><span class="s">REQUIRED</span><span class="w"> </span><span class="s">uuid</span><span class="w"> </span><span class="s">IMPORTED_TARGET</span><span class="p">)</span>
+<span class="c"># use the imported target</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">TARGET</span><span class="w"> </span><span class="s">PkgConfig::UUID</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">message</span><span class="p">(</span><span class="s">STATUS</span><span class="w"> </span><span class="s2">&quot;Found libuuid&quot;</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This was the strategy adopted in <a class="reference internal" href="index.html#probing"><span class="std std-ref">Probing compilation, linking, and execution</span></a> when testing the use of the UUID library.</p>
+</li>
+</ul>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>CMake has a rich ecosystem of modules for finding software dependencies. They are called <code class="docutils literal notranslate"><span class="pre">Find&lt;package&gt;.cmake</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Find&lt;package&gt;.cmake</span></code> modules are used through <code class="docutils literal notranslate"><span class="pre">find_package(&lt;package&gt;)</span></code>.</p></li>
+<li><p>You can also use the classic Unix tool <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> to find software dependencies, but this is not as robust as the CMake-native <code class="docutils literal notranslate"><span class="pre">Find&lt;package&gt;</span></code> modules.</p></li>
+</ul>
+</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="omp" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Example adapted from page 85 in <a class="reference external" href="http://www.openmp.org/wp-content/uploads/openmp-examples-4.5.0.pdf">OpenMP 4.5 examples</a>.</p>
+</aside>
+<aside class="footnote brackets" id="verbose" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>The way in which to trigger a verbose build depends on the native build tool you are using. For Unix Makefiles: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">build</span> <span class="pre">--</span> <span class="pre">VERBOSE=1</span></code>, and for Ninja: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">build</span> <span class="pre">--</span> <span class="pre">-v</span></code>.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+<span id="document-tips-and-tricks"></span><section id="tips-and-tricks-using-cmake">
+<span id="tips-and-tricks"></span><h2>Tips and tricks using CMake<a class="headerlink" href="#tips-and-tricks-using-cmake" title="Link to this heading"></a></h2>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn what tools exist to structure projects as they grow.</p></li>
+<li><p>Discuss the value of localizing scope and avoiding side effects.</p></li>
+<li><p>Recognize more maintainable and less maintainable patterns.</p></li>
+</ul>
+</div>
+<p>As projects grow, code structures get more complicated: more possibilities, more corner cases, more options to users, and more developers who are contributing and may not oversee the entire CMake structure. In this episode we will mention a couple of tools to bring some structure and flow-control into larger projects. <a class="footnote-reference brackets" href="#adapt-from-cr" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<section id="listing-sources-or-globbing-them">
+<h3>Listing sources or globbing them<a class="headerlink" href="#listing-sources-or-globbing-them" title="Link to this heading"></a></h3>
+<p>In all our examples we have listed all sources when defining targets.</p>
+<p>In CMake, you can glob patters (<em>e.g.</em> all files that end with <code class="docutils literal notranslate"><span class="pre">*.cpp</span></code>) without listing them explicitly. This is tempting, but we advice <strong>against</strong> doing this. The reason is that CMake cannot <strong>guarantee</strong> correct tracking dependency changes when you add files after you have configured. <a class="footnote-reference brackets" href="#glob" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<p>Listing files explicitly also allows to <code class="docutils literal notranslate"><span class="pre">grep</span></code> for them in the CMake code to see where a modification is likely needed. This can help colleagues in our projects who are not familiar with CMake to find out where to change things.</p>
+</section>
+<section id="options-and-flow-control">
+<h3>Options and flow control<a class="headerlink" href="#options-and-flow-control" title="Link to this heading"></a></h3>
+<p>You may want to give users the possibility to decide whether they want to enable an option or not.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># by default this one will be ON</span>
+<span class="nb">option</span><span class="p">(</span><span class="s">ENABLE_MPI</span><span class="w"> </span><span class="s2">&quot;Configure for MPI parallelization&quot;</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
+
+<span class="nb">if</span><span class="p">(</span><span class="s">ENABLE_MPI</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">find_package</span><span class="p">(</span><span class="s">MPI</span><span class="w"> </span><span class="s">REQUIRED</span><span class="w"> </span><span class="s">COMPONENTS</span><span class="w"> </span><span class="s">Fortran</span><span class="p">)</span>
+<span class="nb">else</span><span class="p">()</span>
+<span class="w">  </span><span class="nb">message</span><span class="p">(</span><span class="s">STATUS</span><span class="w"> </span><span class="s2">&quot;no problem, building without MPI&quot;</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now the users can decide:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-S.<span class="w"> </span>-Bbuild<span class="w"> </span>-DENABLE_MPI<span class="o">=</span>OFF
+</pre></div>
+</div>
+</section>
+<section id="organizing-files-into-modules">
+<h3>Organizing files into modules<a class="headerlink" href="#organizing-files-into-modules" title="Link to this heading"></a></h3>
+<p>Modules are collections of functions and macros and are either CMake- or user-defined. CMake comes with a rich ecosystem of modules and you will probably write a few of your own to encapsulate frequently used functions or macros in your CMake scripts.</p>
+<p>You can collect related CMake-code into a file called <code class="docutils literal notranslate"><span class="pre">my_lengthy_code.cmake</span></code> and then include it in another CMake code as shown below. This can help organizing projects that are growing out of hand and separate concerns.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include</span><span class="p">(</span><span class="s">my_lengthy_code</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="variables-vs-targets">
+<h3>Variables vs. targets<a class="headerlink" href="#variables-vs-targets" title="Link to this heading"></a></h3>
+<p>In <a class="reference internal" href="index.html#targets"><span class="std std-ref">Target-based build systems with CMake</span></a> we have motivated why targets are preferable over variables.</p>
+<p>When you portion your project into modules, then variable declaration impose an order and the risk is high that somebody will not know about the implicit order and reorder modules one day and the behavior will change.</p>
+<p>Try to minimize the use of user-defined variables. They can point to a sub-optimal solution and a better, more state-less, declarative, solution may exist.</p>
+</section>
+<section id="functions-and-macros">
+<h3>Functions and macros<a class="headerlink" href="#functions-and-macros" title="Link to this heading"></a></h3>
+<p><strong>Functions</strong> and <strong>macros</strong> are built on top of the basic built-in commands and are either CMake- or user-defined. These prove useful to avoid repetition in your CMake scripts. The difference between a function and a macro is their <strong>scope</strong>:</p>
+<ol class="arabic simple">
+<li><p>Functions have their own scope: variables defined inside a function are not propagated back to the caller.</p></li>
+<li><p>Macros do not have their own scope: variables from the parent scope can be modified and new variables in the parent scope can be set.</p></li>
+</ol>
+<p><strong>Prefer functions over macros to minimize side-effects</strong>.</p>
+</section>
+<section id="where-to-list-sources-and-tests">
+<h3>Where to list sources and tests?<a class="headerlink" href="#where-to-list-sources-and-tests" title="Link to this heading"></a></h3>
+<p>Some projects collect all sources in one file, all tests in another file, and carry them across in variables:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>project/
+├── CMakeLists.txt
+├── cmake
+|   ├── sources.cmake
+|   ├── tests.cmake
+|   └── definitions.cmake
+├── external
+└── src
+    ├── evolution
+    ├── initial
+    ├── io
+    └── parser
+</pre></div>
+</div>
+<p>It is recommended to organize the sources like the format below, where sources, definitions, and tests are defined in the “closest” <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>project/
+├── CMakeLists.txt
+├── external
+│   ├── CMakeLists.txt
+└── src
+    ├── CMakeLists.txt
+    ├── evolution
+    │   ├── CMakeLists.txt
+    ├── initial
+    │   ├── CMakeLists.txt
+    ├── io
+    │   ├── CMakeLists.txt
+    └── parser
+        └── CMakeLists.txt
+</pre></div>
+</div>
+<p>The reason is that this will minimize side-effects, ordering effects, and simplify maintenance for those who want to add or rename source files: they can do it in one place, close to where they are coding.</p>
+</section>
+<section id="order-and-side-effects">
+<h3>Order and side effects<a class="headerlink" href="#order-and-side-effects" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>When portioning your project into modules, design them in a way so that order does not matter (much).</p></li>
+<li><p>This is easier with functions than with macros, and easier with targets than with variables.</p></li>
+<li><p>Avoid variables with parent or global scope. Encapsulate and prefer separation of concerns.</p></li>
+</ul>
+</section>
+<section id="where-to-keep-generated-files">
+<h3>Where to keep generated files<a class="headerlink" href="#where-to-keep-generated-files" title="Link to this heading"></a></h3>
+<p>CMake allows us to generate files at configure- or build-time. When generating files, we recommend to <strong>always</strong> generate into the build folder, never outside.</p>
+<p>The reason is that you always want to maintain the possibility to configure different builds with the same source without having to copy the entire project to a different place.</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="adapt-from-cr" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This episode is adapted, with permission, from the <a class="reference external" href="https://coderefinery.github.io/cmake-workshop/growing-projects">CodeRefinery CMake lesson</a>.</p>
+</aside>
+<aside class="footnote brackets" id="glob" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>A glob would be done using the <code class="docutils literal notranslate"><span class="pre">file</span></code> command. We quote the explanation in the official documentation as to why it is generally not safe to use the <code class="docutils literal notranslate"><span class="pre">GLOB</span></code> subcommand: <em>If no ``CMakeLists.txt`` file changes when a source is added or removed then the generated build system cannot know when to ask CMake to regenerate. The ``CONFIGURE_DEPENDS`` flag may not work reliably on all generators, or if a new generator is added in the future that cannot support it, projects using it will be stuck. Even if ``CONFIGURE_DEPENDS`` works reliably, there is still a cost to perform the check on every rebuild.</em></p>
+</aside>
+</aside>
+</section>
+</section>
+<span id="document-additional-topics"></span><section id="additional-topics">
+<span id="id1"></span><h2>Additional Topics<a class="headerlink" href="#additional-topics" title="Link to this heading"></a></h2>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Additional topics for CMake workshop.</p></li>
+<li><p>A short summary of what we have learned.</p></li>
+</ul>
+</div>
+<section id="id2">
+<h3>Additional topics<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>In addition to the contents covered in this <code class="docutils literal notranslate"><span class="pre">Intro</span> <span class="pre">to</span> <span class="pre">CMake</span></code>, there are additional topics and advanced features of the CMake build system that may be of use on projects as they get larger. This is far from a comprehensive list, and information related to unlisted tasks may be found on official CMake documentation.</p>
+<p>These topics include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://enccs.github.io/cmake-workshop/hello-ctest/">Creating and running tests with CTest</a>.</p></li>
+<li><p><a class="reference external" href="https://enccs.github.io/cmake-workshop/fetch-content/">Automated dependency handling with FetchContent</a>.</p></li>
+<li><p><a class="reference external" href="https://enccs.github.io/cmake-workshopcxx-fortran/">Mixing C++ and Fortran</a>.</p></li>
+<li><p><a class="reference external" href="https://enccs.github.io/cmake-workshop/python-bindings/">Mixing Python and compiled languages</a>.</p></li>
+<li><p><a class="reference external" href="https://enccs.github.io/cmake-workshop/environment/">Detecting your environment</a>.</p></li>
+</ul>
+</section>
+<section id="resources-and-books">
+<h3>Resources and books<a class="headerlink" href="#resources-and-books" title="Link to this heading"></a></h3>
+<p>There are many free resources online regarding CMake:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://cmake.org/cmake/help/latest/index.html">CMake official documentation</a>.</p></li>
+<li><p>The <a class="reference external" href="https://cmake.org/cmake/help/v3.30/guide/tutorial/index.html#">CMake tutorial</a>.</p></li>
+<li><p>The <a class="reference external" href="https://hsf-training.github.io/hsf-training-cmake-webpage/">HEP Software Foundation</a> training course.</p></li>
+<li><p><a class="reference external" href="https://cliutils.gitlab.io/modern-cmake/README.html#">An Introduction to Modern CMake</a>.</p></li>
+</ul>
+<p>You can also consult the following books:</p>
+<ul class="simple">
+<li><p><strong>Professional CMake: A Practical Guide</strong> by Craig Scott.</p></li>
+<li><p><strong>CMake Cookbook</strong> by Radovan Bast and Roberto Di Remigio. The accompanying repository is on <a class="reference external" href="https://github.com/dev-cafe/cmake-cookbook">GitHub</a>.</p></li>
+</ul>
+</section>
+<section id="summary-of-intro-to-cmake">
+<h3>Summary of <cite>Intro to CMake</cite><a class="headerlink" href="#summary-of-intro-to-cmake" title="Link to this heading"></a></h3>
+<div class="admonition-keypoints keypoints admonition" id="keypoints-0">
+<p class="admonition-title">Keypoints</p>
+<ul class="simple">
+<li><p>CMake is a powerful cross-platform build systems generator.</p></li>
+<li><p>CMake provides a very good reference-style documentation.</p></li>
+<li><p>For larger projects you probably want to write a lightweight scaffold around CMake.</p></li>
+<li><p>Many projects use CMake in other words you are not alone if you look for a solution.</p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/tagged/cmake">Stack Overflow</a> and <a class="reference external" href="https://github.com/search?q=cmake&amp;type=repositories">GitHub repositories</a> are a good resource for solutions.</p></li>
+</ul>
+</div>
+</section>
+</section>
+</div>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>30 min</p></td>
+<td><p><a class="reference internal" href="#document-hello-cmake"><span class="doc">From sources to executables</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>30 min</p></td>
+<td><p><a class="reference internal" href="#document-cmake-syntax"><span class="doc">CMake syntax</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>40 min</p></td>
+<td><p><a class="reference internal" href="#document-targets"><span class="doc">Target-based build systems with CMake</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>30 min</p></td>
+<td><p><a class="reference internal" href="#document-probing"><span class="doc">Probing compilation, linking, and execution</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>20 min</p></td>
+<td><p><a class="reference internal" href="#document-dependencies"><span class="doc">Finding and using dependencies</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>10 min</p></td>
+<td><p><a class="reference internal" href="#document-tips-and-tricks"><span class="doc">Tips and tricks using CMake</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>10 min</p></td>
+<td><p><a class="reference internal" href="#document-additional-topics"><span class="doc">Additional Topics</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+<span id="document-quick-reference"></span><section id="quick-reference">
+<h2>Quick Reference<a class="headerlink" href="#quick-reference" title="Link to this heading"></a></h2>
+</section>
+</div>
+<section id="who-is-the-course-for">
+<span id="learner-personas"></span><h2>Who is the course for?<a class="headerlink" href="#who-is-the-course-for" title="Link to this heading"></a></h2>
+<p>This course is for students, researchers, engineers, and programmers that have heard of <a class="reference external" href="https://cmake.org/">CMake</a> and want to learn how to use it effectively with projects they are working on.
+This course assumes no previous experience with <a class="reference external" href="https://cmake.org/">CMake</a>. You will have to be familiar with the tools commonly used to build software in your compiled language of choice (C/C++ or Fortran).</p>
+<p>Specifically, this lesson assumes that participants have some prior experience with or knowledge of the following topics (but no expertise is required):</p>
+<ul class="simple">
+<li><p>Compiling and linking executables and libraries.</p></li>
+<li><p>Differences between shared and static libraries.</p></li>
+<li><p>Automated testing.</p></li>
+</ul>
+</section>
+<section id="about-this-course">
+<h2>About this course<a class="headerlink" href="#about-this-course" title="Link to this heading"></a></h2>
+<p>This lesson material is originally developed by the <a class="reference external" href="https://enccs.se/">EuroCC National Competence Center Sweden (ENCCS)</a> and taught in the <a class="reference external" href="https://enccs.github.io/cmake-workshop/">CMake Workshop</a>. Each lesson episode has clearly defined learning objectives and includes multiple exercises along with solutions, and is therefore also useful for self-learning.</p>
+<p>This material <a class="reference external" href="https://enccs.github.io/intro-cmake/">Introduction to CMake</a> was adapted from the lesson materials for <a class="reference external" href="https://enccs.github.io/cmake-workshop/">CMake Workshop (ENCCS)</a> and <a class="reference external" href="https://coderefinery.github.io/cmake-workshop/">CMake Workshop (CodeRefinery)</a>, and will be use for the <a class="reference external" href="https://enccs.se/events/build-systems-course-and-hackathon-2024/">Build Systems Course and Hackathon</a>.</p>
+<p>This lesson material is licensed under <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a> and can be reused in any form (with appropriate credit) in other courses and workshops. Instructors who wish to teach this lesson can refer to the <a class="reference internal" href="#document-guide"><span class="doc">Instructor’s guide</span></a> for practical advice.</p>
+</section>
+<section id="outreach">
+<h2>Outreach<a class="headerlink" href="#outreach" title="Link to this heading"></a></h2>
+<p>There are many free online resources regarding CMake:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://cmake.org/cmake/help/latest/command/cmake_minimum_required.html">CMake official documentation</a>.</p></li>
+<li><p>The <a class="reference external" href="https://cmake.org/cmake/help/v3.19/guide/tutorial/index.html#guide:CMake%20Tutorial">CMake tutorial</a>.</p></li>
+<li><p>The <a class="reference external" href="https://hsf-training.github.io/hsf-training-cmake-webpage/">HEP Software Foundation</a> training course.</p></li>
+<li><p>The <a class="reference external" href="https://coderefinery.github.io/cmake/">Building portable code with CMake</a> from the <a class="reference external" href="https://coderefinery.org/">CodeRefinery</a>.</p></li>
+<li><p>The <a class="reference external" href="https://coderefinery.github.io/cmake-workshop/">CMake Workshop</a> from the <a class="reference external" href="https://coderefinery.org/">CodeRefinery</a>.</p></li>
+</ul>
+<p>You can also consult the following books:</p>
+<ul class="simple">
+<li><p><strong>Professional CMake: A Practical Guide</strong> by Craig Scott.</p></li>
+<li><p><strong>CMake Cookbook</strong> by Radovan Bast and Roberto Di Remigio. The accompanying repository is on <a class="reference external" href="https://github.com/dev-cafe/cmake-cookbook">GitHub</a></p></li>
+</ul>
+</section>
+<section id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Link to this heading"></a></h2>
+<p>The lesson file structure and browsing layout is inspired by and derived from the <a class="reference external" href="https://github.com/coderefinery/sphinx-lesson">work</a> by <a class="reference external" href="https://coderefinery.org/">CodeRefinery</a> licensed under the <a class="reference external" href="http://opensource.org/licenses/mit-license.html">MIT license</a>. We have copied and adapted most of their license text.</p>
+<section id="instructional-material">
+<h3>Instructional Material<a class="headerlink" href="#instructional-material" title="Link to this heading"></a></h3>
+<p>All ENCCS instructional material is made available under the <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license (CC-BY-4.0)</a>. The following is a human-readable summary of (and not a substitute for) the <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text of the CC-BY-4.0 license</a>. You are free:</p>
+<ul class="simple">
+<li><p>to <strong>share</strong> - copy and redistribute the material in any medium or format;</p></li>
+<li><p>to <strong>adapt</strong> - remix, transform, and build upon the material for any purpose, even commercially.</p></li>
+</ul>
+<p>The licensor cannot revoke these freedoms as long as you follow these license terms:</p>
+<ul>
+<li><p><strong>Attribution</strong> - You must give appropriate credit (mentioning that your work is derived from work that is Copyright (c) ENCCS and, where practical, linking to <a class="reference external" href="https://enccs.se">https://enccs.se</a>), provide a <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/">link to the license</a>, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p></li>
+<li><p><strong>No additional restrictions</strong> - You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits. With the understanding that:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.</p></li>
+<li><p>No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="software">
+<h3>Software<a class="headerlink" href="#software" title="Link to this heading"></a></h3>
+<p>The code samples and exercises in this lesson were adapted from the GitHub repository for the <a class="reference external" href="https://github.com/dev-cafe/cmake-cookbook">CMake Cookbook</a>.</p>
+<p>Except where otherwise noted, the example programs and other software provided by ENCCS are made available under the <a class="reference external" href="http://opensource.org/">OSI</a>-approved <a class="reference external" href="http://opensource.org/licenses/mit-license.html">MIT license</a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, EuroCC National Competence Centre Sweden.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

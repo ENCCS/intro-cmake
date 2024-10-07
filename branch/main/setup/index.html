@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting up your system &mdash; Introduction to CMake  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css?v=0c089442" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="From sources to executables" href="../hello-cmake/" />
+    <link rel="prev" title="Introduction to CMake" href="../" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            Introduction to CMake
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up your system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#for-windows-users">For Windows users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#for-macos-and-linux-users">For MacOS and Linux users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-an-environment-and-installing-packages">Creating an environment and installing packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-cmake-modules-on-the-dardel-cluster">The CMake modules on the Dardel cluster</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The lesson</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../hello-cmake/">From sources to executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-syntax/">CMake syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets/">Target-based build systems with CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probing/">Probing compilation, linking, and execution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dependencies/">Finding and using dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips-and-tricks/">Tips and tricks using CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../additional-topics/">Additional Topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Introduction to CMake</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Setting up your system</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/intro-cmake/blob/main/content/setup.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="setting-up-your-system">
+<h1>Setting up your system<a class="headerlink" href="#setting-up-your-system" title="Link to this heading"></a></h1>
+<p>In order to follow this workshop, you will need access to compilers, Python and CMake. You can use an HPC cluster if you have access to one, but the instructions here cover how to install the prerequisites on your own computer.</p>
+<p>These instructions are based on installing compilers and CMake via the <a class="reference external" href="https://docs.conda.io/en/latest/">Conda package and environment manager</a>, as it provides a convenient way to install binary packages in an isolated software environment.</p>
+<section id="for-windows-users">
+<h2>For Windows users<a class="headerlink" href="#for-windows-users" title="Link to this heading"></a></h2>
+<p>We strongly recommend to use (and install if necessary) the <strong>Windows Subsystem for Linux (WSL)</strong> as it is a powerful tool which will likely be useful also after the workshop. Inside WSL you will need Python 3 and the conda environment manager.  A useful guide to do this is found at <a class="reference external" href="https://github.com/kapsakcj/win10-linux-conda-how-to">HERE</a>. The installation of the required dependencies in a <strong>WSL</strong> terminal is documented below.</p>
+</section>
+<section id="for-macos-and-linux-users">
+<h2>For MacOS and Linux users<a class="headerlink" href="#for-macos-and-linux-users" title="Link to this heading"></a></h2>
+<p>MacOS and Linux users can simply open a terminal and install
+<a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>:</p>
+<ul class="simple">
+<li><p>For MacOS see <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html#macosx-installers">HERE</a>.</p></li>
+<li><p>For Linux see <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html#linux-installers">HERE</a>.</p></li>
+</ul>
+</section>
+<section id="creating-an-environment-and-installing-packages">
+<h2>Creating an environment and installing packages<a class="headerlink" href="#creating-an-environment-and-installing-packages" title="Link to this heading"></a></h2>
+<p>Once you have <code class="docutils literal notranslate"><span class="pre">conda</span></code> installed (and <code class="docutils literal notranslate"><span class="pre">WSL</span></code> if you’re using Windows OS) you can use the <a class="reference download internal" download="" href="../_downloads/1e955aa7952605b36c4491740042f7a7/environment.yml"><code class="xref download docutils literal notranslate"><span class="pre">environment.yml</span></code></a> file to install dependencies.</p>
+<p>First save it to your hard drive by clicking the link, and then in a terminal navigate to where you saved the file and type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">environment</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>You then need to activate the new environment by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">intro</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">cmake</span>
+</pre></div>
+</div>
+<p>Now you should have CMake, compilers, Python and a few other packages installed!</p>
+</section>
+<section id="the-cmake-modules-on-the-dardel-cluster">
+<h2>The CMake modules on the Dardel cluster<a class="headerlink" href="#the-cmake-modules-on-the-dardel-cluster" title="Link to this heading"></a></h2>
+<p>If you can assess to the Dardel cluster, you can follow the instructions below to load the CMake module from before running hand-on code examples.</p>
+<ul>
+<li><p><a class="reference external" href="https://www.pdc.kth.se/support/documents/login/ssh_login.html">Login to the Dardel cluster</a>.</p></li>
+<li><p>In your home directory, you can create a folder to keep all your data (replace <cite>XXXXX</cite> with a special string for you).</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>cmake_XXXXX
+<span class="nb">cd</span><span class="w"> </span>cmake_XXXXX/
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Loading the CMake module using the commands below.</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ml<span class="w"> </span>PDC/23.12
+ml<span class="w"> </span>cmake/3.27.7
+cmake<span class="w"> </span>--version
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Cloning the github repository using Git, you can access to the code examples in the <cite>content/code</cite> subdirectory.</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ENCCS/intro-cmake.git
+<span class="nb">cd</span><span class="w"> </span>intro-cmake/content/code/
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Following the steps in hand-on exercises to run the code examples.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../" class="btn btn-neutral float-left" title="Introduction to CMake" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../hello-cmake/" class="btn btn-neutral float-right" title="From sources to executables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, EuroCC National Competence Centre Sweden.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
