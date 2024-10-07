@@ -96,11 +96,11 @@ A complete list of ``Find<PackageName>.cmake`` can be found from the command-lin
 
    $ cmake --help-module-list | grep "Find"
 
-.. typealong:: Using OpenMP
+.. exercise:: Exercise 10: Using OpenMP
 
    We want to compile the following OpenMP sample code: [#omp]_
 
-   .. literalinclude:: code/09_taskloop/solution/taskloop.cpp
+   .. literalinclude:: code/10_taskloop/taskloop.cpp
       :language: c++
 
    Note the usage of the ``taskloop`` construct, which was introduced in OpenMP
@@ -116,18 +116,13 @@ A complete list of ``Find<PackageName>.cmake`` can be found from the command-lin
    we find that the module provides the components ``C``, ``CXX``, and
    ``Fortran`` and that ``OpenMP::OpenMP_CXX`` target will be provided, if
    detection is successful.
-   Thus, we do the following:
-
-   .. code-block:: cmake
-
-      find_package(OpenMP 4.5 REQUIRED COMPONENTS CXX)
-
-      target_link_libraries(task-loop PRIVATE OpenMP::OpenMP_CXX)
+   The scaffold project is in ``content/code/10_taskloop``. You will need to
+   find the suitable OpenMP libary and link against the imported target.
 
    We can configure and build verbosely. [#verbose]_
    Notice that compiler flags, include directories, and link libraries are properly resolved by CMake.
 
-   You can find the complete working example in ``content/code/10_taskloop/solution``.
+   You can find the complete working example in the ``solution`` subfolder.
 
 .. exercise:: Exercise 11: Using MPI
 
