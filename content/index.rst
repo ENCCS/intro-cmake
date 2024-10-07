@@ -53,9 +53,9 @@ In this workshop, you will learn
    :widths: auto
    :delim: ;
 
-   20 min ; :doc:`hello-cmake`
+   30 min ; :doc:`hello-cmake`
    30 min ; :doc:`cmake-syntax`
-   50 min ; :doc:`targets`
+   40 min ; :doc:`targets`
    30 min ; :doc:`probing`
    20 min ; :doc:`dependencies` 
    10 min ; :doc:`tips-and-tricks`
